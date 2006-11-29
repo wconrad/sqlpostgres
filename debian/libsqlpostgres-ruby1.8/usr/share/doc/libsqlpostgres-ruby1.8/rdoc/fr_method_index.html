@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Methods</title>
+<style type="text/css">
+<!--
+  body {
+background-color: #ddddff;
+     font-family: Verdana, Arial, Helvetica, sans-serif; 
+       font-size: 11px; 
+      font-style: normal;
+     line-height: 14px; 
+           color: #000040;
+  }
+div.banner {
+  background: #0000aa;
+  color:      white;
+  padding: 1;
+  margin: 0;
+  font-size: 90%;
+  font-weight: bold;
+  line-height: 1.1;
+  text-align: center;
+  width: 100%;
+}
+
+A.xx { color: white; font-weight: bold; }
+-->
+</style>
+<base target="docwin">
+</head>
+<body>
+<div class="banner"><a href="files/__/lib/sqlpostgres_rb.html" class="xx">Methods</a></div>
+<a href="classes/SqlPostgres/Savepoint.html#M000033">abort (SqlPostgres::Savepoint)</a><br />
+<a href="classes/SqlPostgres/Transaction.html#M000030">abort (SqlPostgres::Transaction)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000073">close (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/PgCidr.html#M000046">column_type (SqlPostgres::PgCidr)</a><br />
+<a href="classes/SqlPostgres/PgInet.html#M000045">column_type (SqlPostgres::PgInet)</a><br />
+<a href="classes/SqlPostgres/PgMacAddr.html#M000037">column_type (SqlPostgres::PgMacAddr)</a><br />
+<a href="classes/SqlPostgres/Savepoint.html#M000032">commit (SqlPostgres::Savepoint)</a><br />
+<a href="classes/SqlPostgres/Transaction.html#M000029">commit (SqlPostgres::Transaction)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000107">cross_join (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000014">datetime_to_sql (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000021">deep_collect (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000069">default (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000070">default= (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000061">default_values (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000095">distinct (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000096">distinct_on (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/PgType.html#M000120">eql? (SqlPostgres::PgType)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000003">escape_array (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000006">escape_array_noquote (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000009">escape_bytea (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000004">escape_bytea_array (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000005">escape_bytea_quote (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000019">escape_char (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000017">escape_qchar (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000001">escape_sql (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000102">except (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000103">except_all (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Delete.html#M000050">exec (SqlPostgres::Delete)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000074">exec (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000083">exec (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000116">exec (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000063">exec (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000114">for_update (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000097">from (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/PgBit.html#M000025">from_sql (SqlPostgres::PgBit)</a><br />
+<a href="classes/SqlPostgres/PgInterval.html#M000126">from_sql (SqlPostgres::PgInterval)</a><br />
+<a href="classes/SqlPostgres/PgLineSegment.html#M000034">from_sql (SqlPostgres::PgLineSegment)</a><br />
+<a href="classes/SqlPostgres/PgTimeWithTimeZone.html#M000038">from_sql (SqlPostgres::PgTimeWithTimeZone)</a><br />
+<a href="classes/SqlPostgres/PgPath.html#M000123">from_sql (SqlPostgres::PgPath)</a><br />
+<a href="classes/SqlPostgres/PgCircle.html#M000022">from_sql (SqlPostgres::PgCircle)</a><br />
+<a href="classes/SqlPostgres/PgWrapper.html#M000117">from_sql (SqlPostgres::PgWrapper)</a><br />
+<a href="classes/SqlPostgres/PgPoint.html#M000042">from_sql (SqlPostgres::PgPoint)</a><br />
+<a href="classes/SqlPostgres/PgTime.html#M000064">from_sql (SqlPostgres::PgTime)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000084">from_sql (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/PgPolygon.html#M000051">from_sql (SqlPostgres::PgPolygon)</a><br />
+<a href="classes/SqlPostgres/PgBox.html#M000090">from_sql (SqlPostgres::PgBox)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000110">group_by (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/PgType.html#M000121">hash (SqlPostgres::PgType)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000111">having (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000055">insert (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000056">insert_array (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000057">insert_bytea (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000058">insert_bytea_array (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000059">insert_qchar (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000100">intersect (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000101">intersect_all (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000106">join_on (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000105">join_using (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000112">limit (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/NullConnection.html#M000091">method_missing (SqlPostgres::NullConnection)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000104">natural_join (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/PgTwoPoints.html#M000035">new (SqlPostgres::PgTwoPoints)</a><br />
+<a href="classes/SqlPostgres/PgBit.html#M000026">new (SqlPostgres::PgBit)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000092">new (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/PgTime.html#M000065">new (SqlPostgres::PgTime)</a><br />
+<a href="classes/SqlPostgres/PgInterval.html#M000127">new (SqlPostgres::PgInterval)</a><br />
+<a href="classes/SqlPostgres/PgPath.html#M000124">new (SqlPostgres::PgPath)</a><br />
+<a href="classes/SqlPostgres/PgTimeWithTimeZone.html#M000039">new (SqlPostgres::PgTimeWithTimeZone)</a><br />
+<a href="classes/SqlPostgres/PgWrapper.html#M000118">new (SqlPostgres::PgWrapper)</a><br />
+<a href="classes/SqlPostgres/PgCircle.html#M000023">new (SqlPostgres::PgCircle)</a><br />
+<a href="classes/SqlPostgres/Delete.html#M000047">new (SqlPostgres::Delete)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000072">new (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000054">new (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000085">new (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/Transaction.html#M000028">new (SqlPostgres::Transaction)</a><br />
+<a href="classes/SqlPostgres/PgPolygon.html#M000052">new (SqlPostgres::PgPolygon)</a><br />
+<a href="classes/SqlPostgres/Savepoint.html#M000031">new (SqlPostgres::Savepoint)</a><br />
+<a href="classes/SqlPostgres/PgPoint.html#M000043">new (SqlPostgres::PgPoint)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000076">new (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000113">offset (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000077">only (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000071">open (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000108">order_by (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Connection.html#M000075">query (SqlPostgres::Connection)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000093">select (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000060">select (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000094">select_literal (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000078">set (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000080">set_array (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000079">set_bytea (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000007">sql_to_array (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000008">sql_to_array2 (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000015">sql_to_date (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000016">sql_to_datetime (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000115">statement (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Delete.html#M000049">statement (SqlPostgres::Delete)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000082">statement (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Insert.html#M000062">statement (SqlPostgres::Insert)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000020">string_to_sql (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000002">substitute_values (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000013">timeToSql (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000088">to_local_time (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/PgTime.html#M000067">to_local_time (SqlPostgres::PgTime)</a><br />
+<a href="classes/SqlPostgres/PgBit.html#M000027">to_s (SqlPostgres::PgBit)</a><br />
+<a href="classes/SqlPostgres/PgInterval.html#M000128">to_s (SqlPostgres::PgInterval)</a><br />
+<a href="classes/SqlPostgres/PgPolygon.html#M000053">to_s (SqlPostgres::PgPolygon)</a><br />
+<a href="classes/SqlPostgres/PgTime.html#M000066">to_s (SqlPostgres::PgTime)</a><br />
+<a href="classes/SqlPostgres/PgTwoPoints.html#M000036">to_s (SqlPostgres::PgTwoPoints)</a><br />
+<a href="classes/SqlPostgres/PgPath.html#M000125">to_s (SqlPostgres::PgPath)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000086">to_s (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/PgWrapper.html#M000119">to_s (SqlPostgres::PgWrapper)</a><br />
+<a href="classes/SqlPostgres/PgCircle.html#M000024">to_s (SqlPostgres::PgCircle)</a><br />
+<a href="classes/SqlPostgres/PgTimeWithTimeZone.html#M000040">to_s (SqlPostgres::PgTimeWithTimeZone)</a><br />
+<a href="classes/SqlPostgres/PgPoint.html#M000044">to_s (SqlPostgres::PgPoint)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000087">to_sql (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/PgType.html#M000122">to_sql (SqlPostgres::PgType)</a><br />
+<a href="classes/SqlPostgres/PgTimeWithTimeZone.html#M000041">to_sql (SqlPostgres::PgTimeWithTimeZone)</a><br />
+<a href="classes/SqlPostgres/PgTime.html#M000068">to_utc_time (SqlPostgres::PgTime)</a><br />
+<a href="classes/SqlPostgres/PgTimestamp.html#M000089">to_utc_time (SqlPostgres::PgTimestamp)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000011">unescape_bytea (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000010">unescape_octal_escapes (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000018">unescape_qchar (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Translate.html#M000012">unescape_text (SqlPostgres::Translate)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000098">union (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000099">union_all (SqlPostgres::Select)</a><br />
+<a href="classes/SqlPostgres/Update.html#M000081">where (SqlPostgres::Update)</a><br />
+<a href="classes/SqlPostgres/Delete.html#M000048">where (SqlPostgres::Delete)</a><br />
+<a href="classes/SqlPostgres/Select.html#M000109">where (SqlPostgres::Select)</a><br />
+</body></html>

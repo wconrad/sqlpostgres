@@ -1,0 +1,19 @@
+#!/usr/bin/ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), "../../lib"))
+$:.unshift(File.join(File.dirname(__FILE__), "../../test"))
+
+require 'Assert'
+require 'sqlpostgres'
+
+include SqlPostgres
+include Assert
+
+# Example: ../../lib/sqlpostgres/Select.rb
+select = Select.new
+select.distinct_on('i')
+select.select('integer', 'i')
+select.select('integer', 'j')
+select.from('foo')
+p select.statement            # OUTPUT
+# End example

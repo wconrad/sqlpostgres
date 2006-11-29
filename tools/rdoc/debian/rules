@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+
+common-install-arch common-install-indep:: common-install-impl
+common-install-impl::
+	DESTDIR=$(CURDIR)/debian/rdoc ruby install.rb
+	chmod a+x $(CURDIR)/debian/rdoc/usr/lib/ruby/1.6/rdoc/parsers/parse_rb.rb

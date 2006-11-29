@@ -1,0 +1,42 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>escape_sql (SqlPostgres::Translate)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Translate.rb, line 92</span>
+    <span class="kw">def</span> escape_sql(thing)
+      <span class="kw">return</span> <span class="str">&quot;null&quot;</span> <span class="kw">if</span> thing.nil?
+      <span class="kw">if</span> thing.is_a?(Array)
+        substitute_values(thing)
+      <span class="kw">elsif</span> thing.respond_to?(:to_sql)
+        thing.to_sql
+      <span class="kw">elsif</span> thing.is_a?(Time)
+        &quot;timestamp '#{timeToSql(thing)}'&quot;
+      <span class="kw">elsif</span> thing.is_a?(DateTime)
+        &quot;timestamp with time zone '#{datetime_to_sql(thing)}'&quot;
+      <span class="kw">elsif</span> thing.is_a?(Integer)
+        thing.to_s
+      <span class="kw">elsif</span> thing.is_a?(Float)
+        <span class="str">&quot;%.14g&quot;</span> % thing
+      <span class="kw">elsif</span> thing.is_a?(Date)
+        &quot;date '#{thing}'&quot;
+      <span class="kw">elsif</span> thing.is_a?(BigDecimal)
+        thing.to_s(<span class="str">'f'</span>)
+      <span class="kw">elsif</span> thing == <span class="kw">false</span>
+        <span class="str">&quot;false&quot;</span>
+      <span class="kw">elsif</span> thing == <span class="kw">true</span>
+        <span class="str">&quot;true&quot;</span>
+      <span class="kw">elsif</span> thing == :default
+        <span class="str">&quot;default&quot;</span>
+      <span class="kw">elsif</span> thing.respond_to?(:statement)
+        &quot;(#{thing.statement})&quot;
+      <span class="kw">else</span>
+        string_to_sql(thing.to_s, <span class="str">'\\'</span>)
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

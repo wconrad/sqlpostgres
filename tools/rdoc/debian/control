@@ -1,0 +1,20 @@
+Source: rdoc
+Section: doc
+Priority: optional
+Maintainer: Brian M. Almeida <bma@debian.org>
+Build-Depends-Indep: debhelper (>> 3.0.0), ruby (>= 1.6.5-1), cdbs
+Standards-Version: 3.6.0
+
+Package: rdoc
+Architecture: all
+Depends: ruby (>= 1.6.5-1), irb (>= 1.6.5-1)
+Description: Generate documentation from ruby source files
+ RDoc - Documentation from Ruby Source Files
+  * Generates structured HTML and XML documentation from Ruby source and C
+    extensions.
+  * Automatically extracts class, module, method, and attribute definitions.
+    These can be annonated using inline comments.
+  * Analyzes method visibility.
+  * Handles aliasing.
+  * Uses non-intrusive and implicit markup in the comments. Readers
+    of the original source needn't know that it is marked up at all.

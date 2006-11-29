@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"/usr/share/sgml/docbook/dtd/xml/4.2/docbookx.dtd">
+<book>
+<bookinfo>
+<title>sqlpostgres</title>
+<author>
+<firstname>Wayne</firstname>
+<surname>Conrad</surname>
+</author>
+<copyright>
+<year>2003</year>
+<holder>Wayne Conrad</holder>
+</copyright>
+<abstract>
+
+<para><application>sqlpostgres</application> is a Ruby library that
+builds and executes insert, update, and select statements for
+Postgresql.  <application>sqlpostgres</application> statements are
+easier to read and maintain than raw SQL.  Ruby data types are
+automatically converted to and from SQL data types, and results are
+returned as an array of hashes rather than an array of arrays.</para>
+
+</abstract> 
+</bookinfo> 
+
+<chapter>
+<title>Overview</title>
+
+<para><application>Sqlpostgres</application> is a Ruby library that
+builds and executes insert, update and select statements for
+Postgresql.</para>
+
+<para><application>Features</application>:
+
+<itemizedlist>
+
+<listitem><para> uses the venerable <ulink
+url="http://www.postgresql.jp/interfaces/ruby/">
+<application>postgresql</application></ulink> library for its basic
+access to the database.  That means it will run anywhere the
+postgresql runs and benefits from the proven reliability of the
+<application>postgresql</application> library. </para></listitem>
+
+<listitem><para> is fully documented with plenty of tested
+examples.</para></listitem>
+
+<listitem><para> is fully tested with a comprehensive suite of unit
+tests.</para></listitem>
+
+<listitem><para> automatically escapes <literal>'</literal>,
+<literal>\</literal>, and non-printable characters in
+strings.</para></listitem>
+
+<listitem><para> automatically converts data read from the database
+into Ruby types.  If you read an integer column, you get a Ruby
+<classname>Integer</classname>.  If you read a text column, you get a
+Ruby <classname>String</classname>.  If you read a timestamp, you get
+a Ruby <classname>Time</classname>. </para></listitem>
+
+<listitem><para> returns each row as a hash keyed by column name (or
+alias), not as an array.  No more counting columns.</para></listitem>
+
+<listitem><para> creates all common and most uncommon types of select,
+insert or update statement with ease, including
+<application>Postgres</application> extensions.</para></listitem>
+
+<listitem><para> has an escape mechanism allowing you to execute any
+SQL statement, for those things that this library doesn't
+do.</para></listitem>
+
+</itemizedlist>
+</para>
+
+<section>
+<title>Connecting</title>
+
+<para>
+Here a simple way to make a connection to database 'foo':
+
+<programlisting id='connection'>
+Connection.open do |connection|
+  # Use the connection
+end
+</programlisting>
+
+The connection is automatically closed at the end of the block.
+</para>
+
+<para> See <xref linkend="Connecting"/> for more about making and
+using database connections.  </para>
+
+</section>
+
+<section>
+<title>Insert</title>
+
+<para>Here is a simple insert statement:
+<programlisting id="insert2">
+insert = Insert.new('person', connection)
+insert.insert('name', "O'Reilly")
+insert.insert('date_of_birth', Date.civil(1972, 1, 1))
+p insert.statement         # "insert into person (name, date_of_birth) values 
+                           # ('O\\047Reilly', date '1972-01-01')"
+insert.exec
+</programlisting>
+</para>
+
+<para>For documentation and examples, see the <ulink
+url="rdoc/classes/SqlPostgres/Insert.html">class
+documentation</ulink>.  </para>
+
+<sidebar>
+<title>
+Why do so many of the examples call <methodname>statement</methodname>?
+</title>
+
+<para>Many of the examples call <methodname>statement</methodname> and
+print out the result.  Do you have to?  No.  It's only done in the
+examples because showing the what SQL the library generated makes it
+easier to understand the example.  In your own code, you will probably
+only call <methodname>statement</methodname> when debugging.</para>
+
+</sidebar>
+
+</section>
+
+<section>
+<title>Update</title>
+
+<para>Here is a simple update statement:
+<programlisting id="update2">
+update = Update.new('person', connection)
+update.set('married', true)
+update.where(['name = %s', 'Smith'])
+p update.statement                # "update person set married = true where 
+                                  # name = 'Smith'"
+update.exec
+</programlisting>
+</para>
+
+<para>For documentation and examples, see the <ulink
+url="rdoc/classes/SqlPostgres/Update.html">class
+documentation</ulink>.</para>
+
+</section>
+
+<section>
+<title>Select</title>
+
+<para>Here is a simple select statement:
+<programlisting id="select2">
+select = Select.new(connection)
+select.select('name')
+select.select('married')
+select.from('person')
+select.where(['married = %s', false])
+p select.statement    # "select name, married from person where married = 
+                      # false"
+p select.exec         # [{"name"=>"Fred", "married"=>false}, {"name"=>"Mary", 
+                      # "married"=>false}]
+</programlisting>
+</para>
+
+<para>For documentation and examples, see the <ulink
+url="rdoc/classes/SqlPostgres/Select.html">class
+documentation</ulink>.  </para>
+
+</section>
+
+<section>
+<title>Transactions</title>
+
+<para>Transactions are simple.  See the example in the <ulink
+url="rdoc/classes/SqlPostgres/Transaction.html">class
+documentation</ulink>.</para>
+
+</section>
+
+<section>
+<title>Namespace</title>
+
+<para> All classes and functions in the library are in module
+<classname>SqlPostgres</classname>.  You may either include
+<classname>SqlPostgres</classname>:
+
+<programlisting id='include_module2'>
+require 'sqlpostgres'
+include SqlPostgres
+
+Connection.open do |connection|
+  #...
+end
+</programlisting>
+
+or add the <classname>SqlPostgres</classname> prefix to the class
+names you use:
+
+<programlisting id='use_prefix2'>
+require 'sqlpostgres'
+
+SqlPostgres::Connection.open do |connection|
+  #...
+end
+</programlisting>
+</para>
+
+<para>The examples in this manual assume you've included
+<classname>SqlPostgres</classname>.</para>
+
+</section>
+
+</chapter>
+
+<chapter id="Connecting">
+<title>Connecting</title>
+
+<section>
+<title>Getting a connection</title>
+
+<section>
+<title>Automatically closed connection</title>
+
+<para>Here's the simplest way to make a database connection:
+
+<programlisting id='connection_auto'>
+Connection.open('db_name'=>'sqlpostgres_test') do |connection|
+  # Use the connection
+end
+</programlisting>
+</para>
+
+<para>The connection is automatically closed at the end of the block,
+even if an exception occurs.  You can create connections that you have
+to close yourself, but you should prefer the automatic way when
+possible.</para>
+
+<para><methodname>Connection.open</methodname> takes many arguments to
+allow you to select the database name, host name, user name, password,
+and so on:
+
+<table>
+<title><methodname>Connection.open</methodname> arguments</title>
+<tgroup cols='3'>
+<thead>
+<row>
+<entry>name</entry>
+<entry>type</entry>
+<entry>description</entry>
+<entry>default</entry>
+</row>
+</thead>
+<tbody>
+
+<row>
+
+<entry><literal>"host_name"</literal></entry>
+
+<entry>String</entry>
+
+<entry> The name of the host to connect to.  This can be a DNS name,
+or an IP (dotted-quad)</entry>
+
+<entry><literal>"localhost"</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"port"</literal> </entry>
+
+<entry>Integer</entry>
+
+<entry>The port number to connect to</entry>
+
+<entry><literal>5432</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"options"</literal></entry>
+
+<entry>String</entry>
+
+<entry>Trace/debug options to be sent to the server</entry>
+
+<entry><literal>""</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"tty"</literal></entry>
+
+<entry>String</entry>
+
+<entry>Name of tty for back end messages</entry>
+
+<entry><literal>""</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"db_name"</literal></entry>
+
+<entry>String</entry>
+
+<entry>Database name.  <literal>""</literal> means to use the user
+name as the database name.</entry>
+
+<entry><literal>""</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"login"</literal></entry>
+
+<entry>String</entry>
+
+<entry>Login name.  nil means to use the user name as the login
+name.</entry>
+
+<entry><literal>nil</literal></entry>
+
+</row>
+
+<row>
+
+<entry><literal>"password"</literal></entry>
+
+<entry>String</entry>
+
+<entry>Password.  nil means no password.</entry>
+
+<entry><literal>nil</literal></entry>
+
+</row>
+
+</tbody>
+</tgroup>
+</table>
+
+</para>
+
+</section>
+
+<section>
+<title>Manually closed connection</title>
+
+<para>If you need to take control over closing the database
+connection, you can do it:
+
+<programlisting id="connection_manual">
+connection = Connection.new
+# use the connection
+connection.close
+</programlisting>
+</para>
+
+<para> When doing the close yourself, only two things close the
+connection: Your program ending, or you executing the close method.
+Nothing else will close the connection (no, they're not closed when
+garbage collected).</para>
+
+</section>
+
+<section>
+<title>Wrapping an existing connection</title>
+
+<para> If you have a connection you have already obtained from another
+source, and wish to use with this library, then pass it to the
+constructor of Connection like so:
+
+<programlisting id="connection_wrapped_new">
+pgconn = PGconn.connect('localhost', 5432, '', '', ENV['USER'])
+connection = Connection.new('connection'=>pgconn)
+# use the connection
+connection.close    # or, if you prefer, pgconn.close
+</programlisting>
+</para>
+
+<para> When wrapping a connection this way, the library will not
+automatically close it for you.  You may close it by calling either
+<methodname>Connection.close</methodname>, or
+<methodname>PGconn.close</methodname> </para>
+
+<para> You can wrap a connection and have it closed for you by passing
+it to <methodname>Connection.open</methodname>:
+
+<programlisting id="connection_wrapped_open">
+pgconn = PGconn.connect('localhost', 5432, '', '', ENV['USER'])
+connection = Connection.open('connection'=>pgconn) do |connection|
+  # use the connection
+end
+</programlisting>
+
+</para>
+
+</section>
+
+</section>
+
+<section>
+<title>Using the connection</title>
+
+<para>Once you have a connection, you have three ways to use it:
+
+<orderedlist>
+
+<listitem><para>Make it the default connection.</para></listitem>
+
+<listitem><para>Pass it to the constructor of Insert, Update, or Select</para></listitem>
+
+<listitem><para>Pass it to the exec method of Insert, Update, or Select.</para></listitem>
+
+</orderedlist>
+
+</para>
+
+<section>
+<title>Default Connection</title>
+
+<para>You may set a default connection.  After that, any
+<classname>Insert</classname>, <classname>Update</classname> or
+<classname>Select</classname> statements you make will use that
+connection (unless a different connection is passed to
+<methodname>new</methodname> or <methodname>exec</methodname>).
+
+<programlisting id="connection_default">
+Connection.open do |connection|
+  Connection.default = connection
+  select = Select.new
+  select.select_literal(1, 'i')    # [{"i"=>1}]
+  p select.exec
+end
+</programlisting>
+</para>
+
+</section>
+
+<section>
+<title>Pass a connection to the constructor</title>
+
+<para>You may pass a connection to the constructor of any
+<classname>Select</classname>, <classname>Insert</classname> or
+<classname>Update</classname>.
+
+<programlisting id="connection_ctor">
+insert = Insert.new('person', connection)
+insert.insert('name', 'Fred')
+insert.exec
+</programlisting>
+</para>
+
+<para>A connection passed to the constructor overrides any default
+connection.</para>
+
+</section>
+
+<section>
+<title>Pass a connection to the exec method</title>
+
+<para>You may pass a connection to the exec method of any
+<classname>Select</classname>, <classname>Insert</classname> or
+<classname>Update</classname>:
+
+<programlisting id="connection_exec">
+insert = Insert.new('person')
+insert.insert('name', 'Fred')
+insert.exec(connection)
+</programlisting>
+</para>
+
+<para>A connection passed to the <methodname>exec</methodname> method
+overrides the default connection or a connection passed to the
+constructor.</para>
+
+</section>
+
+</section>
+
+</chapter>
+
+<chapter id="Types">
+<title>Types</title>
+
+<table>
+<title>Types</title>
+<tgroup cols='3'>
+<thead>
+<row>
+  <entry>Postgres type</entry>
+  <entry>Ruby type</entry>
+  <entry>Insert method (scalar)</entry>
+  <entry>Insert method(array)</entry>
+</row>
+</thead>
+<tbody>
+<row>
+  <entry>text, character varying(n), varchar(n)</entry>
+  <entry>String</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>character(n), char(n)</entry>
+  <entry>String</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>character, char</entry>
+  <entry>String</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>"char"</entry>
+  <entry>String</entry>
+  <entry>insert_char</entry>
+  <entry></entry>
+</row>
+<row>
+  <entry>name</entry>
+  <entry>String</entry>
+  <entry>insert</entry>
+  <entry>insert_char</entry>
+</row>
+<row>
+  <entry>integer, int, int4</entry>
+  <entry>Integer</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>smallint, int2</entry>
+  <entry>Integer</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>serial, serial4</entry>
+  <entry>Integer</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>bigserial, serial8</entry>
+  <entry>Integer</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>real, float4</entry>
+  <entry>Float</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>double precision, float8</entry>
+  <entry>Float</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+<row>
+  <entry>decimal, numeric</entry>
+  <entry>BigDecimal</entry>
+  <entry>insert</entry>
+  <entry>insert_array</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
+
+</chapter>
+
+<chapter id="Development">
+<title>Development</title>
+
+<section>
+<title>Building Debian Packages</title>
+
+<para>This is just how I do it.  Experts will doubtless do it better.
+Each of these steps is done from the top level directory of the
+package source (that is, from the parent directory of the
+<filename>debian</filename> directory.</para>
+
+<para>This is a debian native package, so there's no fooling around
+with upstream versions, and package versions never have a "-1", "-2",
+etc. on the end.</para>
+
+<para>First, edit <filename>debian/changelog</filename> to increment
+the version number and explain the changes.  I like using
+<application>debchange</application> to do it:</para>
+
+<para><userinput><prompt>$ </prompt>dch -i -p 'Fixed a bad
+bug'</userinput></para>
+
+<para>The <userinput>-p</userinput> switch tells
+<application>debchange</application> not to change the name of the
+directory.  That's just my preference.</para>
+
+<para>Now build the package:</para>
+
+<para><userinput><prompt>$ </prompt>dpkg-buildpackage -rfakeroot -us -uc
+</userinput></para>
+
+<para>I use <userinput>-us</userinput> and <userinput>-uc</userinput>
+to avoid having to sign the packages.  Better package maintainers will
+no doubt do the right thing.</para>
+
+<para>A whole bunch of stuff will happen.  When it's done, the package
+files will be in the parent directory.</para>
+
+</section>
+
+</chapter>
+
+</book>

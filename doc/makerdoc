@@ -1,0 +1,5 @@
+#!/usr/bin/ruby
+
+Dir.chdir(File.dirname(__FILE__))
+system("ruby -I ../tools/rdoc ../tools/rdoc/rdoc.rb -o rdoc ../lib/*.rb "\
+       "../lib/sqlpostgres/*.rb")

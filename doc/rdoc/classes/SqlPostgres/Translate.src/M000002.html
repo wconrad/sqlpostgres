@@ -1,0 +1,26 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>substitute_values (SqlPostgres::Translate)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Translate.rb, line 146</span>
+    <span class="kw">def</span> substitute_values(expression)
+      <span class="kw">if</span> expression.is_a?(Array)
+        pieces = expression[1..-1].collect <span class="kw">do</span> |value|
+          escape_sql(value)
+        <span class="kw">end</span>
+        <span class="kw">if</span> expression.first == :in
+          &quot;(#{pieces.join(', ')})&quot;
+        <span class="kw">else</span>
+          expression[0] % pieces
+        <span class="kw">end</span>
+      <span class="kw">else</span>
+        expression
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

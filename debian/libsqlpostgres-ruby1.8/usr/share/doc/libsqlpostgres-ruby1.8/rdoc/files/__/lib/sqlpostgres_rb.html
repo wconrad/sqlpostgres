@@ -1,0 +1,117 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: sqlpostgres.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript" language="JavaScript">
+  <!--
+  function popCode(url) {
+    window.open(url, "Code", 
+          "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  //-->
+  </script>
+</head>
+
+<body bgcolor="white">
+<table summary="Information on file" width="100%">
+ <tr class="title-row">
+ <td><table summary="layout" width="100%"><tr>
+   <td class="big-title-font" colspan="2">sqlpostgres.rb</td>
+   <td align="right"><table summary="layout" cellspacing="0" cellpadding="2">
+         <tr>
+           <td  class="small-title-font">Path:</td>
+           <td class="small-title-font">../lib/sqlpostgres.rb</td>
+         </tr>
+         <tr>
+           <td class="small-title-font">Modified:</td>
+           <td class="small-title-font">Wed Aug 02 12:42:10 MST 2006</td>
+         </tr>
+        </table>
+    </td></tr></table></td>
+  </tr>
+</table>
+  <!-- banner header -->
+
+
+
+<div class="description"><p>
+sqlpostgres is a wrapper around the venerable Ruby postgres library.
+sqlpostgres builds and executes insert, update and select statements.
+sqlpostgres statements are easier to read and maintain than raw SQL. Ruby
+data types are automatically converted to and from SQL data types, and
+results are returned as an array of hashes rather than an array of arrays.
+</p>
+<p>
+Here&#8217;s a small example showing some inserts, an update, and a select:
+</p>
+<pre>
+  require &quot;sqlpostgres&quot;
+
+  include SqlPostgres
+</pre>
+<pre>
+  Connection.open do |connection|
+    connection.exec(&quot;create temporary table foo (t text)&quot;)
+
+    insert = Insert.new('foo', connection)
+    insert.insert('t', 'Smith')
+    insert.exec
+</pre>
+<pre>
+    insert = Insert.new('foo', connection)
+    insert.insert('t', 'Jones')
+    insert.exec
+
+    update = Update.new('foo', connection)
+    update.set('t', &quot;O'Brien&quot;)
+    update.where([&quot;t = %s&quot;, &quot;Smith&quot;])
+    update.exec
+</pre>
+<pre>
+    select = Select.new(connection)
+    select.select('t')
+    select.from('foo')
+    select.order_by('t')
+    p select.exec  # [{&quot;t&quot;=&gt;&quot;Jones&quot;}, {&quot;t&quot;=&gt;&quot;O'Brien&quot;}]
+
+  end
+</pre>
+<p>
+All classes and functions in this library are in the <a
+href="../../../classes/SqlPostgres.html">SqlPostgres</a> module. Users of
+this library should either use the module name as a prefix:
+</p>
+<pre>
+  require 'sqlpostgres'
+  insert = SqlPostgres::Insert.new('foo')
+</pre>
+<p>
+or include the module:
+</p>
+<pre>
+  require 'sqlpostgres'
+  include SqlPostgres
+  insert = Insert.new('foo')
+</pre>
+</div>
+
+<table summary="Requires" cellpadding="5" width="100%">
+<tr><td class="tablesubtitle">Required files</td></tr>
+</table>
+<div class="name-list">
+File&nbsp; &nbsp;
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+=head1 NAME
+
+rdoc - Generate documentation from ruby source files
+
+=head1 SYNOPSIS
+
+Usage:
+
+  rdoc [options]  [names...]
+
+=head1 DESCRIPTION
+
+Files are parsed, and the information they contain
+collected, before any output is produced. This allows cross
+references between all files to be resolved. If a name is a
+directory, it is traversed. If no names are specified, all
+Ruby files in the current directory (and subdirectories) are
+processed.
+
+=head1 OPTIONS
+
+Options:
+
+=over 8
+
+=item B<-a>, B<--all>
+
+include all methods (not just public) in the output
+
+=item B<-c> I<charset>, B<--charset> I<charset>
+
+specifies HTML character-set
+
+=item B<-D>, B<--debug>
+
+displays lots on internal stuff
+
+=item B<-d>, B<--diagram>
+
+Generate diagrams showing modules and classes.
+You need dot V1.8.6 or later to use the --diagram
+option correctly. Dot is available from
+http://www.research.att.com/sw/tools/graphviz/
+
+=item B<-x> I<pattern>, B<--exclude> I<pattern>
+
+do not process files or directories matching
+pattern. Files given explicitly on the command
+line will never be excluded.
+
+=item B<-F>, B<--fileboxes>
+
+classes are put in boxes which represents
+files, where these classes reside. Classes
+shared between more than one file are
+shown with list of files that sharing them.
+Silently discarded if --diagram is not given
+Experimental.
+
+=item B<-f> I<format_name>, B<--fmt> I<format_name>
+
+set the output formatter (see below)
+
+=item B<-h>, B<--help>
+
+print out a brief help summary
+
+=item B<-O>, B<--help-output>
+
+explain the various output options
+
+=item B<-I> I<gif|jpg|jpg|jpeg>, B<--image-format> I<gif|png|jpg|jpeg>
+
+Sets output image format for diagrams. Can
+be png, gif, jpeg, jpg. If this option is
+omitted, png is used. Requires --diagram.
+
+=item B<-i> I<dir[,dir,...]>, B<--include> I<dir[,dir,...]>
+
+set (or add to) the list of directories
+to be searched when satisfying :include:
+requests. Can be used more than once.
+
+=item B<-S>, B<--inline-source>
+
+Show method source code inline, rather
+than via a popup link
+
+=item B<-N>, B<--line-numbers>
+
+Include line numbers in the source code
+
+=item B<-m> I<name>, B<--main> I<name>
+
+'name' will be the initial page displayed
+
+=item B<-1>, B<--one-file>
+
+put all the output into a single file
+
+=item B<-o> I<dir>, B<--op> I<dir>
+
+set the output directory
+
+=item B<-n> I<name>, B<--opname> I<name>
+
+Set the 'name' of the output. Has no
+effect for HTML.
+
+=item B<-q>, B<--quiet>
+
+don't show progress as we parse
+
+=item B<-H>, B<--show-hash>
+
+A name of the form #name in a comment
+is a possible hyperlink to an instance
+method name. When displayed, the '#' is
+removed unless this option is specified
+
+=item B<-w> I<width>, B<--tab-width> I<width>
+
+Set the width of tab characters (default 8)
+
+=item B<-T> I<template_name>, B<--template> I<template_name>
+
+Set the template used when generating output
+
+=item B<-t> I<text>, B<--title> I<text>
+
+Set 'txt' as the title for the output
+
+=item B<-v>, B<--version>
+
+display  RDoc's version
+
+=back
+
+=head1 NOTES
+
+Available output formatters: chm, html, xml
+
+For information on where the output goes, use
+
+   rdoc --help-output
+
+=head1 AUTHOR
+
+This manpage was contributed by Brian Almeida <bma@debian.org>

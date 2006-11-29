@@ -1,0 +1,27 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>new (SqlPostgres::PgCircle)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/PgCircle.rb, line 33</span>
+    <span class="kw">def</span> initialize(*args)
+      <span class="kw">case</span> args.size
+      <span class="kw">when</span> 0
+        @center = PgPoint.new
+        @radius = 0
+      <span class="kw">when</span> 2
+        @center = args[0]
+        @radius = args[1]
+      <span class="kw">when</span> 3
+        @center = PgPoint.new(*args[0..1])
+        @radius = args[2]
+      <span class="kw">else</span>
+        raise ArgumentError, &quot;Incorrect number of arguments: #{args.size}&quot;
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

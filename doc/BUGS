@@ -1,0 +1,2 @@
+Is only tested and known to work properly if the database encoding is
+SQL_ASCII.

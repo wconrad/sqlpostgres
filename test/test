@@ -1,0 +1,32 @@
+#!/usr/bin/ruby
+
+$:.unshift(File.dirname(__FILE__))
+require 'TestConfig'
+
+def modTime(test)
+  if test =~ /^(.*?\/)(\w+).test.rb$/
+    target = File.expand_path(File.join($1, TestConfig::LIB_PATH, $2 + ".rb"))
+    if File.exists?(target)
+      [File.mtime(test), File.mtime(target)].max
+    else
+      File.mtime(test)
+    end
+  end
+end
+
+def sortByModTime(tests)
+  tests.sort do |a, b| modTime(b) <=> modTime(a) end
+end
+
+testFiles = File.join(File.dirname(__FILE__), "*.test.rb")
+for test in sortByModTime(Dir[testFiles])
+  puts "----- #{test}"
+  system("#{test}")
+  exit(1) if $? != 0
+end
+
+# Local Variables:
+# tab-width: 2
+# ruby-indent-level: 2
+# indent-tabs-mode: nil
+# End:

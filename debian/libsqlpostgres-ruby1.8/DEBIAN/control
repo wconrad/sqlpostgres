@@ -1,0 +1,15 @@
+Package: libsqlpostgres-ruby1.8
+Version: 0.1.20
+Section: libs
+Priority: optional
+Architecture: all
+Depends: libruby1.8, libpgsql-ruby1.8, libbigdecimal-ruby1.8
+Installed-Size: 1592
+Maintainer: Wayne Conrad <wconrad@yagni.com>
+Description: Advanced Postgres library for Ruby 1.8
+ sqlpostgres is a wrapper around the venerable Ruby postgres
+ library. sqlpostgres builds and executes insert, update and select
+ statements. sqlpostgres statements are easier to read and maintain
+ than raw SQL. Ruby data types are automatically converted to and from
+ SQL data types, and results are returned as an array of hashes rather
+ than an array of arrays.

@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>statement (SqlPostgres::Insert)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Insert.rb, line 215</span>
+    <span class="kw">def</span> statement
+      [
+        <span class="str">&quot;insert into&quot;</span>,
+        @table,
+        column_list,
+        query_expression,
+      ].compact.join(<span class="str">' '</span>)
+    <span class="kw">end</span></pre>
+</body>
+</html>

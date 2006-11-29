@@ -1,0 +1,6 @@
+These example programs are designed to run standalone, provided that
+there is a database with the same name as your login name.
+
+They are automatically inserted into the class (rdoc) documentation
+and into the manual's docbook source.  To do that, run the script
+"insertexamples.rb"

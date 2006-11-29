@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>select (SqlPostgres::Select)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Select.rb, line 80</span>
+    <span class="kw">def</span> select(expression, as = <span class="kw">nil</span>, &amp;converter)
+      converter ||= AutoConverter
+      expression = <span class="kw">if</span> expression.is_a?(Select)
+                     &quot;(#{expression.statement})&quot; 
+                   <span class="kw">else</span>
+                     Translate.substitute_values(expression)
+                   <span class="kw">end</span>
+      @columns &lt;&lt; Column.new(expression, as, converter)
+    <span class="kw">end</span></pre>
+</body>
+</html>

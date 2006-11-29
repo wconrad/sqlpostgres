@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>unescape_qchar (SqlPostgres::Translate)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Translate.rb, line 372</span>
+    <span class="kw">def</span> unescape_qchar(s)
+      <span class="kw">if</span> s.empty?
+        <span class="str">&quot;\000&quot;</span>
+      <span class="kw">else</span>
+        <span class="kw">return</span> s
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

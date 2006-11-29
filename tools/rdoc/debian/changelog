@@ -1,0 +1,33 @@
+rdoc (0.9.0-3) unstable; urgency=low
+
+  * Switched to CDBS 
+  * Updated Standards to 3.6.0
+
+ -- Brian M. Almeida <bma@debian.org>  Thu, 21 Aug 2003 12:51:34 -0400
+
+rdoc (0.9.0-2) unstable; urgency=low
+
+  * Added rdoc manpage 
+  * Cleaned up lintian warnings 
+
+ -- Brian M. Almeida <bma@debian.org>  Tue, 19 Aug 2003 14:11:29 -0400
+
+rdoc (0.9.0-1) unstable; urgency=low
+
+  * New upstream release 
+
+ -- Brian M. Almeida <bma@debian.org>  Tue,  8 Apr 2003 12:58:56 -0400
+
+rdoc (0.0.beta.2-1) unstable; urgency=low
+
+  * New upstream release, closes: #156855 
+  * Indent list of features, closes: #156364
+
+ -- Brian M. Almeida <bma@debian.org>  Thu, 15 Aug 2002 22:24:10 -0400
+
+rdoc (0.0.beta.1-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Brian M. Almeida <bma@debian.org>  Sun, 14 Apr 2002 14:14:57 -0400
+

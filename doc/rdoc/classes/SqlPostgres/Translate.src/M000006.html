@@ -1,0 +1,25 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>escape_array_noquote (SqlPostgres::Translate)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Translate.rb, line 200</span>
+    <span class="kw">def</span> escape_array_noquote(a, &amp;escaper)
+      pieces = a.collect <span class="kw">do</span> |e|
+        <span class="kw">if</span> e.is_a?(Array)
+          escape_array_noquote(e, &amp;escaper)
+        <span class="kw">else</span>
+          escaped = escaper.call(e.to_s).
+            gsub(<span class="re">/'/</span>, <span class="str">&quot;\\\\'&quot;</span>).
+            gsub(<span class="re">/&quot;/</span>, <span class="str">&quot;\\\\\\\&quot;&quot;</span>)
+          <span class="str">'&quot;'</span> + escaped + <span class="str">'&quot;'</span>
+        <span class="kw">end</span>
+      <span class="kw">end</span>
+      <span class="str">&quot;{&quot;</span> + pieces.join(<span class="str">','</span>) + <span class="str">&quot;}&quot;</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

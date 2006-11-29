@@ -1,0 +1,21 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>deep_collect (SqlPostgres::Translate)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Translate.rb, line 414</span>
+    <span class="kw">def</span> deep_collect(a)
+      <span class="kw">if</span> a.is_a?(Array)
+        a.collect <span class="kw">do</span> |e|
+          deep_collect(e) <span class="kw">do</span> |v| <span class="kw">yield</span>(v) <span class="kw">end</span>
+        <span class="kw">end</span>
+      <span class="kw">else</span>
+        <span class="kw">yield</span>(a)
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

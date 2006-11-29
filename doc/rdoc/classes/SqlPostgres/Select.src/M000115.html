@@ -1,0 +1,18 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>statement (SqlPostgres::Select)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Select.rb, line 502</span>
+    <span class="kw">def</span> statement
+      &quot;select#{distinct_clause} #{expression_list}&quot;\
+      &quot;#{tableExpression}#{join_clause}&quot;\
+      &quot;#{where_clause}#{set_ops_clause}#{group_by_clause}#{having_clause}#{order_by_clause}&quot;\
+      &quot;#{limit_clause}#{offset_clause}#{for_update_clause}&quot;
+    <span class="kw">end</span></pre>
+</body>
+</html>

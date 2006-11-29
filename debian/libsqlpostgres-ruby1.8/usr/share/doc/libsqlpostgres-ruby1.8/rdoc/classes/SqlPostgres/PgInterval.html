@@ -1,0 +1,218 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: SqlPostgres::PgInterval</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel=StyleSheet href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript" language="JavaScript">
+  <!--
+  function popCode(url) {
+    window.open(url, "Code", 
+          "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  //-->
+  </script>
+</head>
+
+<body bgcolor="white">
+
+<table summary="Information on class" width="100%" border="0" cellspacing="0">
+ <tr class="title-row">
+ <td class="big-title-font">
+   <sup><font color="aqua">Class</font></sup> SqlPostgres::PgInterval
+ </td>
+ <td align="right">
+   <table summary="layout" cellspacing="0" cellpadding="2">
+     <tr valign="top">
+      <td class="small-title-font">In:</td>
+      <td class="small-title-font">
+        <a href="../../files/__/lib/sqlpostgres/PgInterval_rb.html" class="aqua">
+../lib/sqlpostgres/PgInterval.rb
+         </a>
+<br />
+      </td>
+     </tr>
+     <tr>
+      <td class="small-title-font">Parent:</td>
+      <td class="small-title-font">
+        <a href="PgType.html" class="aqua">
+PgType
+         </a>
+      </td>
+     </tr>
+   </table>
+  </td>
+  </tr>
+</table>
+  <!-- banner header -->
+
+
+
+<div class="description"><p>
+This class holds the value of an &quot;interval&quot; column. Instances are
+immutable.
+</p>
+<p>
+The fields of a <a href="PgInterval.html">PgInterval</a> are:
+</p>
+<ul>
+<li>millennia (integer, default 0)
+
+</li>
+<li>centuries (integer, default 0)
+
+</li>
+<li>decades (integer, default 0)
+
+</li>
+<li>years (integer, default 0)
+
+</li>
+<li>months (integer, default 0)
+
+</li>
+<li>weeks (integer, default 0)
+
+</li>
+<li>days (integer, default 0)
+
+</li>
+<li>hours (integer, default 0)
+
+</li>
+<li>minutes (integer, default 0)
+
+</li>
+<li>seconds (integer or float, default 0)
+
+</li>
+<li>ago (boolean, default false)
+
+</li>
+</ul>
+<p>
+These fields are set by passing has args to the constructor and can be
+retrieved using simple accessors:
+</p>
+<pre>
+  interval = PgInterval.new('hours'=&gt;1, 'minutes'=&gt;30)
+  p interval.hours                                      # 1
+  p interval.minutes                                    # 30
+  p interval.seconds                                    # 0
+</pre>
+</div>
+
+
+<table summary="Methods" cellpadding="5" width="100%">
+<tr><td class="tablesubtitle">Methods</td></tr>
+</table>
+<div class="name-list">
+<a href="#M000126">from_sql</a>&nbsp; &nbsp;
+<a href="#M000127">new</a>&nbsp; &nbsp;
+<a href="#M000128">to_s</a>&nbsp; &nbsp;
+</div>
+
+
+
+
+
+<table summary="Method list" cellpadding="5" width="100%">
+<tr><td class="tablesubtitle">Public Class methods</td></tr>
+</table>
+<table summary="method"  width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr><td class="methodtitle">
+<a name="M000126"></a>
+<a href="PgInterval.src/M000126.html" target="Code" class="methodtitle"
+ onClick="popCode('PgInterval.src/M000126.html');return false;">
+<b>from_sql</b>(s)
+</a>
+</td></tr>
+</table>
+<div class="description">
+<p>
+Convert a Postgres string (ie &quot;2 days 12:00:00&quot;) to a <a
+href="PgInterval.html">PgInterval</a> instance.
+</p>
+</div>
+<table summary="method"  width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr><td class="methodtitle">
+<a name="M000127"></a>
+<a href="PgInterval.src/M000127.html" target="Code" class="methodtitle"
+ onClick="popCode('PgInterval.src/M000127.html');return false;">
+<b>new</b>(args = {})
+</a>
+</td></tr>
+</table>
+<div class="description">
+<p>
+Constructor.
+</p>
+<dl>
+<dt>args</dt><dd>The values of the days, minutes, and so on, as a hash. Each value is an
+Integer except for ago, which is a boolean.
+
+<p>
+The keys are:
+</p>
+<ul>
+<li>millennia
+
+</li>
+<li>centuries
+
+</li>
+<li>decades
+
+</li>
+<li>years
+
+</li>
+<li>months
+
+</li>
+<li>weeks
+
+</li>
+<li>days
+
+</li>
+<li>hours
+
+</li>
+<li>minutes
+
+</li>
+<li>seconds
+
+</li>
+</ul>
+<p>
+Any integer not specified defaults to 0; any boolean not specified defaults
+to false.
+</p>
+</dd>
+</dl>
+</div>
+<table summary="Method list" cellpadding="5" width="100%">
+<tr><td class="tablesubtitle">Public Instance methods</td></tr>
+</table>
+<table summary="method"  width="100%" cellspacing="0" cellpadding="5" border="0">
+<tr><td class="methodtitle">
+<a name="M000128"></a>
+<a href="PgInterval.src/M000128.html" target="Code" class="methodtitle"
+ onClick="popCode('PgInterval.src/M000128.html');return false;">
+<b>to_s</b>()
+</a>
+</td></tr>
+</table>
+<div class="description">
+<p>
+Convert to Postgres format (ie &quot;1 day 12:00:00&quot;)
+</p>
+</div>
+
+</body>
+</html>

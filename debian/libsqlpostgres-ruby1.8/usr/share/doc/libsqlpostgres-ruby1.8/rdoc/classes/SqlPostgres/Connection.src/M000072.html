@@ -1,0 +1,30 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>new (SqlPostgres::Connection)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/Connection.rb, line 99</span>
+    <span class="kw">def</span> initialize(args = {})
+      raise ArgumentError, <span class="str">&quot;Block not allowed&quot;</span> <span class="kw">if</span> block_given?
+      @pgconn = args[<span class="str">'connection'</span>]
+      <span class="kw">if</span> @pgconn.nil?
+        hostName = args[<span class="str">'host_name'</span>] || <span class="str">&quot;localhost&quot;</span>
+        dbName = args[<span class="str">'db_name'</span>] || <span class="str">&quot;&quot;</span>
+        port = args[<span class="str">'port'</span>] || 5432
+        options = args[<span class="str">'options'</span>] || <span class="str">&quot;&quot;</span>
+        tty = args[<span class="str">'tty'</span>] || <span class="str">&quot;&quot;</span>
+        login = args[<span class="str">'login'</span>]
+        password = args[<span class="str">'password'</span>]
+        @pgconn = @@pgClass.connect(hostName, port, options, tty, dbName, 
+                                    login, password)
+      <span class="kw">end</span>
+      @statement_in_exception = args[<span class="str">'statement_in_exception'</span>]
+      @statement_in_exception = <span class="kw">true</span> <span class="kw">if</span> @statement_in_exception.nil?
+      @pgconn.set_client_encoding(<span class="str">&quot;unicode&quot;</span>)
+    <span class="kw">end</span></pre>
+</body>
+</html>

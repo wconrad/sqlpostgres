@@ -1,0 +1,193 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: SqlPostgres</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel=StyleSheet href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript" language="JavaScript">
+  <!--
+  function popCode(url) {
+    window.open(url, "Code", 
+          "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  //-->
+  </script>
+</head>
+
+<body bgcolor="white">
+
+<table summary="Information on class" width="100%" border="0" cellspacing="0">
+ <tr class="title-row">
+ <td class="big-title-font">
+   <sup><font color="aqua">Module</font></sup> SqlPostgres
+ </td>
+ <td align="right">
+   <table summary="layout" cellspacing="0" cellpadding="2">
+     <tr valign="top">
+      <td class="small-title-font">In:</td>
+      <td class="small-title-font">
+        <a href="../files/__/lib/sqlpostgres/Connection_rb.html" class="aqua">
+../lib/sqlpostgres/Connection.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Delete_rb.html" class="aqua">
+../lib/sqlpostgres/Delete.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Exceptions_rb.html" class="aqua">
+../lib/sqlpostgres/Exceptions.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Insert_rb.html" class="aqua">
+../lib/sqlpostgres/Insert.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/NullConnection_rb.html" class="aqua">
+../lib/sqlpostgres/NullConnection.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgBit_rb.html" class="aqua">
+../lib/sqlpostgres/PgBit.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgBox_rb.html" class="aqua">
+../lib/sqlpostgres/PgBox.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgCidr_rb.html" class="aqua">
+../lib/sqlpostgres/PgCidr.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgCircle_rb.html" class="aqua">
+../lib/sqlpostgres/PgCircle.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgInet_rb.html" class="aqua">
+../lib/sqlpostgres/PgInet.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgInterval_rb.html" class="aqua">
+../lib/sqlpostgres/PgInterval.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgLineSegment_rb.html" class="aqua">
+../lib/sqlpostgres/PgLineSegment.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgMacAddr_rb.html" class="aqua">
+../lib/sqlpostgres/PgMacAddr.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgPath_rb.html" class="aqua">
+../lib/sqlpostgres/PgPath.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgPoint_rb.html" class="aqua">
+../lib/sqlpostgres/PgPoint.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgPolygon_rb.html" class="aqua">
+../lib/sqlpostgres/PgPolygon.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgTime_rb.html" class="aqua">
+../lib/sqlpostgres/PgTime.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgTimeWithTimeZone_rb.html" class="aqua">
+../lib/sqlpostgres/PgTimeWithTimeZone.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgTimestamp_rb.html" class="aqua">
+../lib/sqlpostgres/PgTimestamp.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgTwoPoints_rb.html" class="aqua">
+../lib/sqlpostgres/PgTwoPoints.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgType_rb.html" class="aqua">
+../lib/sqlpostgres/PgType.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/PgWrapper_rb.html" class="aqua">
+../lib/sqlpostgres/PgWrapper.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Savepoint_rb.html" class="aqua">
+../lib/sqlpostgres/Savepoint.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Select_rb.html" class="aqua">
+../lib/sqlpostgres/Select.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Transaction_rb.html" class="aqua">
+../lib/sqlpostgres/Transaction.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Translate_rb.html" class="aqua">
+../lib/sqlpostgres/Translate.rb
+         </a>
+<br />
+        <a href="../files/__/lib/sqlpostgres/Update_rb.html" class="aqua">
+../lib/sqlpostgres/Update.rb
+         </a>
+<br />
+      </td>
+     </tr>
+   </table>
+  </td>
+  </tr>
+</table>
+  <!-- banner header -->
+
+
+
+
+
+
+
+
+<table summary="List of classes" cellpadding="5" width="100%">
+<tr><td class="tablesubtitle">Classes and Modules</td></tr>
+</table>
+<div class="classlist">
+Module <a href="SqlPostgres/Translate.html" class="link">SqlPostgres::Translate</a><br />
+Class <a href="SqlPostgres/Connection.html" class="link">SqlPostgres::Connection</a><br />
+Class <a href="SqlPostgres/Delete.html" class="link">SqlPostgres::Delete</a><br />
+Class <a href="SqlPostgres/Insert.html" class="link">SqlPostgres::Insert</a><br />
+Class <a href="SqlPostgres/NoConnection.html" class="link">SqlPostgres::NoConnection</a><br />
+Class <a href="SqlPostgres/NullConnection.html" class="link">SqlPostgres::NullConnection</a><br />
+Class <a href="SqlPostgres/PgBit.html" class="link">SqlPostgres::PgBit</a><br />
+Class <a href="SqlPostgres/PgBox.html" class="link">SqlPostgres::PgBox</a><br />
+Class <a href="SqlPostgres/PgCidr.html" class="link">SqlPostgres::PgCidr</a><br />
+Class <a href="SqlPostgres/PgCircle.html" class="link">SqlPostgres::PgCircle</a><br />
+Class <a href="SqlPostgres/PgInet.html" class="link">SqlPostgres::PgInet</a><br />
+Class <a href="SqlPostgres/PgInterval.html" class="link">SqlPostgres::PgInterval</a><br />
+Class <a href="SqlPostgres/PgLineSegment.html" class="link">SqlPostgres::PgLineSegment</a><br />
+Class <a href="SqlPostgres/PgMacAddr.html" class="link">SqlPostgres::PgMacAddr</a><br />
+Class <a href="SqlPostgres/PgPath.html" class="link">SqlPostgres::PgPath</a><br />
+Class <a href="SqlPostgres/PgPoint.html" class="link">SqlPostgres::PgPoint</a><br />
+Class <a href="SqlPostgres/PgPolygon.html" class="link">SqlPostgres::PgPolygon</a><br />
+Class <a href="SqlPostgres/PgTime.html" class="link">SqlPostgres::PgTime</a><br />
+Class <a href="SqlPostgres/PgTimeWithTimeZone.html" class="link">SqlPostgres::PgTimeWithTimeZone</a><br />
+Class <a href="SqlPostgres/PgTimestamp.html" class="link">SqlPostgres::PgTimestamp</a><br />
+Class <a href="SqlPostgres/PgTwoPoints.html" class="link">SqlPostgres::PgTwoPoints</a><br />
+Class <a href="SqlPostgres/PgType.html" class="link">SqlPostgres::PgType</a><br />
+Class <a href="SqlPostgres/PgWrapper.html" class="link">SqlPostgres::PgWrapper</a><br />
+Class <a href="SqlPostgres/Savepoint.html" class="link">SqlPostgres::Savepoint</a><br />
+Class <a href="SqlPostgres/Select.html" class="link">SqlPostgres::Select</a><br />
+&nbsp;&nbsp;::Module <a href="SqlPostgres/Select/Types.html" class="link">SqlPostgres::Select::Types</a><br />
+Class <a href="SqlPostgres/Transaction.html" class="link">SqlPostgres::Transaction</a><br />
+Class <a href="SqlPostgres/Update.html" class="link">SqlPostgres::Update</a><br />
+
+</div>
+
+
+
+</body>
+</html>

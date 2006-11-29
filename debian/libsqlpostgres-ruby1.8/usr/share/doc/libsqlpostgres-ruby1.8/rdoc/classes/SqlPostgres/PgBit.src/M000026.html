@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>new (SqlPostgres::PgBit)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/PgBit.rb, line 34</span>
+    <span class="kw">def</span> initialize(*args)
+      args = args.flatten
+      <span class="kw">if</span> args.size == 1 &amp;&amp; args[0].is_a?(String)
+        @bits = bits_from_sql(args[0])
+      <span class="kw">else</span>
+        @bits = args
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

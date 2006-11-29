@@ -1,0 +1,20 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>to_s (SqlPostgres::PgPath)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/PgPath.rb, line 35</span>
+    <span class="kw">def</span> to_s
+      s = points.join(<span class="str">&quot;, &quot;</span>)
+      <span class="kw">if</span> closed
+        &quot;(#{s})&quot;
+      <span class="kw">else</span>
+        &quot;[#{s}]&quot;
+      <span class="kw">end</span>
+    <span class="kw">end</span></pre>
+</body>
+</html>

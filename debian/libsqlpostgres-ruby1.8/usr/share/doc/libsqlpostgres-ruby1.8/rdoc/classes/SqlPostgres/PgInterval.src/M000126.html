@@ -1,0 +1,47 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>from_sql (SqlPostgres::PgInterval)</title>
+<link rel=StyleSheet href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body bgcolor="white">
+<pre><span class="cmt"># File ../lib/sqlpostgres/PgInterval.rb, line 60</span>
+      <span class="kw">def</span> from_sql(s)
+        <span class="kw">begin</span>
+          args = {}
+          words = s.split
+          raise ArgumentError <span class="kw">if</span> words.empty?
+          <span class="kw">while</span> !words.empty?
+            word = words.shift
+            <span class="kw">case</span> word
+            <span class="kw">when</span> <span class="re">/(-)?(\d{2}):(\d{2})(?::(\d{2}(\.\d+)?))?/</span>
+              sign = <span class="kw">if</span> $1 <span class="kw">then</span> -1 <span class="kw">else</span> +1 <span class="kw">end</span>
+              args[<span class="str">'hours'</span>] = sign * $2.to_i
+              args[<span class="str">'minutes'</span>] = sign * $3.to_i
+              args[<span class="str">'seconds'</span>] = sign * $4.to_f
+            <span class="kw">when</span> <span class="re">/\d+/</span>
+              n = word.to_i
+              units = words.shift
+              <span class="kw">case</span> units
+              <span class="kw">when</span> <span class="str">'day'</span>, <span class="str">'days'</span>
+                args[<span class="str">'days'</span>] = n
+              <span class="kw">when</span> <span class="str">'mon'</span>, <span class="str">'mons'</span>
+                args[<span class="str">'months'</span>] = n
+              <span class="kw">when</span> <span class="str">'year'</span>, <span class="str">'years'</span>
+                args[<span class="str">'years'</span>] = n
+              <span class="kw">else</span>
+                raise ArgumentError
+              <span class="kw">end</span>
+            <span class="kw">else</span>
+              raise ArgumentError
+            <span class="kw">end</span>
+          <span class="kw">end</span>
+        <span class="kw">rescue</span> ArgumentError
+          raise ArgumentError, &quot;Syntax error in interval: #{s.inspect}&quot;
+        <span class="kw">end</span>
+        PgInterval.new(args)
+      <span class="kw">end</span></pre>
+</body>
+</html>
