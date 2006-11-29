@@ -893,6 +893,116 @@ class SelectTest < Test
     end
   end
 
+  def testRandomAuxOrder
+    setenv('RANDOM_SQL_ORDER', '1') do
+      makeTestConnection do |connection|
+        connection.exec("create temporary table #{table1} (i int)")
+        select = Select.new(connection)
+        select.select('i')
+        select.from(table1)
+        10.times do |i|
+          connection.exec("insert into #{table1} (i) values (#{i})")
+        end
+        assertEquals(select.statement, "select i from #{table1} order by random()")
+        results = (1..10).collect do
+          select.exec.collect do |row|
+            row['i']
+          end
+        end
+        number_of_orders = results.uniq.size
+        assertGreater(number_of_orders, 1)
+      end
+    end
+  end
+
+  def testRandomAuxOrder_DistinctOn
+    setenv('RANDOM_SQL_ORDER', '1') do
+      makeTestConnection do |connection|
+        connection.exec("create temporary table #{table1} (i int, j int, k int)")
+        connection.exec("insert into #{table1} values (0, 0, 0)")
+        connection.exec("insert into #{table1} values (0, 0, 1)")
+        connection.exec("insert into #{table1} values (0, 1, 0)")
+        connection.exec("insert into #{table1} values (0, 1, 1)")
+        connection.exec("insert into #{table1} values (1, 0, 0)")
+        connection.exec("insert into #{table1} values (1, 0, 1)")
+        connection.exec("insert into #{table1} values (1, 1, 0)")
+        connection.exec("insert into #{table1} values (1, 1, 1)")
+        select = Select.new(connection)
+        select.distinct_on('i')
+        select.select('i')
+        select.select('j')
+        select.select('k')
+        select.from(table1)
+        select.order_by('i')
+        select.order_by('j')
+        select.order_by('k')
+        assertEquals(select.statement,
+                     "select distinct on (i) i, j, k from #{table1} "\
+                     "order by i, j, k")
+        assertEquals(select.exec, [
+                       {"i"=>0, "j"=>0, "k"=>0}, 
+                       {"i"=>1, "j"=>0, "k"=>0}
+                     ])
+      end
+    end
+  end
+
+  def testRandomAuxOrder_Distinct
+    setenv('RANDOM_SQL_ORDER', '1') do
+      makeTestConnection do |connection|
+        connection.exec("create temporary table #{table1} (i int)")
+        connection.exec("insert into #{table1} values (1)")
+        connection.exec("insert into #{table1} values (1)")
+        connection.exec("insert into #{table1} values (2)")
+        select = Select.new(connection)
+        select.distinct
+        select.select('i')
+        select.from(table1)
+        select.order_by('i')
+        assertEquals(select.statement,
+                     "select distinct i from #{table1} order by i")
+        assertEquals(select.exec, [{'i'=>1}, {'i'=>2}])
+      end
+    end
+  end
+
+  def testRandomAuxOrder_SetOp
+    testCases = [
+      [:union, 'union', [1, 2, 3, 4]],
+    ]
+    setenv('RANDOM_SQL_ORDER', '1') do
+      makeTestConnection do |connection|
+        connection.exec("create temporary table #{table1} (i int)")
+        connection.exec("create temporary table #{table2} (i int)")
+        connection.exec("insert into #{table1} values (1)")
+        connection.exec("insert into #{table1} values (1)")
+        connection.exec("insert into #{table1} values (2)")
+        connection.exec("insert into #{table1} values (3)")
+        connection.exec("insert into #{table1} values (3)")
+        connection.exec("insert into #{table2} values (2)")
+        connection.exec("insert into #{table2} values (3)")
+        connection.exec("insert into #{table2} values (3)")
+        connection.exec("insert into #{table2} values (4)")
+        subselect = Select.new
+        subselect.select('i')
+        subselect.from(table2)
+        for function, op, expectedValues in testCases
+          assertInfo("For function #{function}:") do
+            select = Select.new(connection)
+            select.select('i')
+            select.from(table1)
+            select.send(function, subselect)
+            select.order_by('i')
+            assertEquals(select.statement, "select i from #{table1} "\
+                         "#{op} (select i from #{table2} order by random()) order by i")
+            expectedResult = expectedValues.collect do |i| {'i'=>i} end
+            assertEquals(select.exec, expectedResult)
+          end
+        end
+      end
+    end
+  end
+
 end
 
 SelectTest.new.run if $0 == __FILE__

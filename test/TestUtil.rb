@@ -53,6 +53,16 @@ module TestUtil
     (floor..255).to_a.collect do |i| i.chr end.join
   end
 
+  def setenv(name, value)
+    old_value = ENV[name]
+    ENV[name] = value
+    begin
+      yield
+    ensure
+      ENV[name] = old_value
+    end
+  end
+
 end
 
 # Local Variables:

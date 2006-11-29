@@ -23,6 +23,11 @@ module Assert
   end
   module_function :assertEquals
 
+  def assertGreater(actual, expected)
+    return if actual > expected
+    fail("Expected > #{expected.inspect} but got #{actual.inspect}")
+  end
+
   def assertGreaterOrEqual(actual, expected)
     return if actual >= expected
     fail("Expected >= #{expected.inspect} but got #{actual.inspect}")

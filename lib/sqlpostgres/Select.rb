@@ -763,11 +763,17 @@ module SqlPostgres
       end
     end
 
+    def random_order?
+      ENV['RANDOM_SQL_ORDER'] && !@distinct && @distinct_on.empty? && @set_ops.empty?
+    end
+
     def order_by_clause
-      if @order_by.empty?
+      order = @order_by
+      order << 'random()' if random_order?
+      if order.empty?
         ""
       else
-        " order by " + @order_by.join(', ')
+        " order by " + order.join(', ')
       end
     end
 
