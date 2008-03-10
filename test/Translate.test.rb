@@ -185,11 +185,11 @@ class TranslateTest < Test
     testCases = [
       [nil, 'null'],
       [:default, "default"],
-      ["", "''"],
-      ["foo", %q"'foo'"],
-      ["\000\037 ", %q"'\\\\000\\\\037 '"],
-      ["'\\", %q"'''\\\\\\\\'"],
-      ["~\177\377", "'~\\\\177\\\\377'"],
+      ["", "E''"],
+      ["foo", %q"E'foo'"],
+      ["\000\037 ", %q"E'\\\\000\\\\037 '"],
+      ["'\\", %q"E'''\\\\\\\\'"],
+      ["~\177\377", "E'~\\\\177\\\\377'"],
     ]
     for testCase in testCases
       assertInfo("For test case #{testCase.inspect}") do

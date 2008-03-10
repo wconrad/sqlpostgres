@@ -273,7 +273,7 @@ module SqlPostgres
     def escape_bytea(s)
       return "null" if s.nil?
       return "default" if s == :default
-      "'" + PGconn.escape_bytea(s) + "'"
+      "E'" + PGconn.escape_bytea(s) + "'"
     end
     module_function :escape_bytea
 

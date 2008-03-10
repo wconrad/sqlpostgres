@@ -1,3 +1,9 @@
+libsqlpostgres-ruby1.8 (0.1.22) unstable; urgency=low
+
+  * Quote bytea strings with E notation so that 8.3 will be happy
+
+ -- Wayne Conrad <wconrad@yagni.com>  Mon, 10 Mar 2008 06:00:41 -0700
+
 libsqlpostgres-ruby1.8 (0.1.21) unstable; urgency=low
 
   * Quote strings with E notation so that 8.3 will be happy
