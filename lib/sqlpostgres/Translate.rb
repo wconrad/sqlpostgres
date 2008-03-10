@@ -404,7 +404,7 @@ module SqlPostgres
     #   The backslashes to use in the escape sequence.
 
     def string_to_sql(thing, backslashes)
-      "'" + thing.gsub(/[\x0-\x1f\x80-\xff'\\]/) do |c|
+      "E'" + thing.gsub(/[\x0-\x1f\x80-\xff'\\]/) do |c|
         escape_char(c[0], backslashes)
       end + "'"
     end

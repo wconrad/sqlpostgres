@@ -1,10 +1,8 @@
 libsqlpostgres-ruby1.8 (0.1.21) unstable; urgency=low
 
-  * If environment variable RANDOM_SQL_ORDER is set, random() is added
-    to the end of sql queries.  This helps expose non-deterministic
-    behavior in programs using this library.
+  * Quote strings with E notation so that 8.3 will be happy
 
- -- Wayne Conrad <wconrad@yagni.com>  Wed, 29 Nov 2006 04:25:51 -0700
+ -- Wayne Conrad <wconrad@yagni.com>  Sat, 08 Mar 2008 07:49:36 -0700
 
 libsqlpostgres-ruby1.8 (0.1.20) unstable; urgency=low
 

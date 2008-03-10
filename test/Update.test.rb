@@ -75,8 +75,8 @@ class UpdateTest < Test
       update = Update.new(table1, connection)
       update.set('t', 'Tam')
       update.where(['t = %s', "O'Brien"])
-      assertEquals(update.statement, "update #{table1} set t = 'Tam' "\
-                   "where t = 'O\\047Brien'")
+      assertEquals(update.statement, "update #{table1} set t = E'Tam' "\
+                   "where t = E'O\\047Brien'")
       update.exec
       rows = connection.query("select * from #{table1} order by t")
       assertEquals(rows, [["Smith"], ["Tam"]])

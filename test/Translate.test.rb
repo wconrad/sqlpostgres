@@ -12,10 +12,10 @@ class TranslateTest < Test
     pi = 3.1415926535897932384626433832795028841971693993751058209749445923
     testCases = [
       [nil, 'null'],
-      ["", "''"],
-      ["foo", %q"'foo'"],
-      ["fred's", %q"'fred\\047s'"],
-      ['\\', %q"'\\134'"],
+      ["", "E''"],
+      ["foo", %q"E'foo'"],
+      ["fred's", %q"E'fred\\047s'"],
+      ['\\', %q"E'\\134'"],
       [Time.local(2000, 1, 2, 3, 4, 5, 6), 
         "timestamp '2000-01-02 03:04:05.000006'"],
       [Time.local(1999, 12, 31, 23, 59, 59, 999999), 
@@ -33,7 +33,7 @@ class TranslateTest < Test
       [:default, "default"],
       [['1 + %s', 1], '1 + 1'],
       [[:in, 1, 2], '(1, 2)'],
-      [[:in, 'foo', 'bar'], "('foo', 'bar')"],
+      [[:in, 'foo', 'bar'], "(E'foo', E'bar')"],
       [BigDecimal('0'), '0.0'],
       [BigDecimal('0.'), '0.0'],
       [BigDecimal('1234567890.0987654321'), '1234567890.0987654321'],
@@ -81,7 +81,7 @@ class TranslateTest < Test
         PgPolygon.new(PgPoint.new(1, 2), PgPoint.new(3, 4)), 
         "polygon '((1, 2), (3, 4))'"
       ],
-      [["%s %s", 1, 'Fred'], "1 'Fred'"],
+      [["%s %s", 1, 'Fred'], "1 E'Fred'"],
     ]
     for testCase in testCases
       assertInfo("For test case #{testCase.inspect}") do
@@ -97,11 +97,11 @@ class TranslateTest < Test
       [[], %q"'{}'"],
       [[1], %q"ARRAY[1]"],
       [[1, 2], %q"ARRAY[1, 2]"],
-      [['foo'], %q"ARRAY['foo']"],
-      [['\\'], %q"ARRAY['\\134']"],
-      [["a,b,c"], %q"ARRAY['a,b,c']"],
-      [["a", "b", "c"], %q"ARRAY['a', 'b', 'c']"],
-      [["\"Hello\""], %q"ARRAY['\"Hello\"']"],
+      [['foo'], %q"ARRAY[E'foo']"],
+      [['\\'], %q"ARRAY[E'\\134']"],
+      [["a,b,c"], %q"ARRAY[E'a,b,c']"],
+      [["a", "b", "c"], %q"ARRAY[E'a', E'b', E'c']"],
+      [["\"Hello\""], %q"ARRAY[E'\"Hello\"']"],
       [
         [[0, 0], [0, 1], [1, 0], [1, 1]],
         "ARRAY[ARRAY[0, 0], ARRAY[0, 1], ARRAY[1, 0], ARRAY[1, 1]]"
@@ -283,7 +283,7 @@ class TranslateTest < Test
     assertEquals(Translate.substitute_values("foo"), "foo")
     assertEquals(Translate.substitute_values(["bar %s", 1]), "bar 1")
     assertEquals(Translate.substitute_values(["bar %s", "O'Malley"]), 
-                 "bar 'O\\047Malley'")
+                 "bar E'O\\047Malley'")
     assertEquals(Translate.substitute_values(["%s %s", nil, 1.23]), "null 1.23")
   end
 
