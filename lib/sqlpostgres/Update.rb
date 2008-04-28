@@ -55,7 +55,7 @@ module SqlPostgres
     #   update = Update.new('foo')
     #   update.set('name', 'Fred')
     #   update.set('hire_date', Time.local(2002, 1, 1))
-    #   p update.statement      # "update foo set name = 'Fred', hire_date = 
+    #   p update.statement      # "update foo set name = E'Fred', hire_date = 
     #                           # timestamp '2002-01-01 00:00:00.000000'"
     #**
     #
@@ -95,7 +95,7 @@ module SqlPostgres
     #** Example: update_set_bytea
     #   update = Update.new('foo')
     #   update.set_bytea('name', "\000\377")
-    #   p update.statement      # "update foo set name = '\\\\000\\\\377'"
+    #   p update.statement      # "update foo set name = E'\\\\000\\\\377'"
     #**
 
     def set_bytea(column, value)
@@ -131,7 +131,7 @@ module SqlPostgres
     #   update = Update.new('foo')
     #   update.set('i', 1)
     #   update.where(['t = %s', "bar"])
-    #   p update.statement     # "update foo set i = 1 where t = 'bar'"
+    #   p update.statement     # "update foo set i = 1 where t = E'bar'"
     #**
 
     def where(condition)

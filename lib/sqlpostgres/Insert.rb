@@ -8,7 +8,7 @@ module SqlPostgres
   #   insert.insert('i', 1)
   #   insert.insert('t', 'foo')
   #   p insert.statement           # "insert into foo (i, t) values (1, 
-  #                                # 'foo')"
+  #                                # E'foo')"
   #   insert.exec
   #**
 
@@ -62,7 +62,7 @@ module SqlPostgres
     #** Example: insert_insert
     #   insert = Insert.new('foo')
     #   insert.insert('t', 'bar')
-    #   p insert.statement         # "insert into foo (t) values ('bar')"
+    #   p insert.statement         # "insert into foo (t) values (E'bar')"
     #**
     #
     # Example (select)
@@ -135,7 +135,7 @@ module SqlPostgres
     #   insert = Insert.new('foo')
     #   insert.insert_bytea('t', "\000\001\002\003")
     #   p insert.statement     # "insert into foo (t) values 
-    #                          # ('\\\\000\\\\001\\\\002\\\\003')"
+    #                          # (E'\\\\000\\\\001\\\\002\\\\003')"
     #**
 
     def insert_bytea(column, value = :no_value)

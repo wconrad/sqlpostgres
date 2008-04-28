@@ -121,7 +121,7 @@ module SqlPostgres
     #   select = Select.new(connection)
     #   select.select_literal(2, 'n')
     #   select.select_literal('foo', 't')
-    #   p select.statement         # "select 2 as n, 'foo' as t"
+    #   p select.statement         # "select 2 as n, E'foo' as t"
     #   p select.exec              # [{"n"=>2, "t"=>"foo"}]
     #**
 
@@ -390,7 +390,7 @@ module SqlPostgres
     #   select.from('person')
     #   select.where(['name = %s', 'Smith'])
     #   p select.statement     # "select age from person where name = 
-    #                          # 'Smith'"
+    #                          # E'Smith'"
     #**
     #
     # Example (in)
@@ -399,8 +399,8 @@ module SqlPostgres
     #   select.select('s')
     #   select.from('foo')
     #   select.where(['s in %s', [:in, 'foo', 'bar']])
-    #   p select.statement     # "select s from foo where s in ('foo', 
-    #                          # 'bar')"
+    #   p select.statement     # "select s from foo where s in (E'foo', 
+    #                          # E'bar')"
     #**
 
     def where(expression)

@@ -101,7 +101,7 @@ insert = Insert.new('person', connection)
 insert.insert('name', "O'Reilly")
 insert.insert('date_of_birth', Date.civil(1972, 1, 1))
 p insert.statement         # "insert into person (name, date_of_birth) values 
-                           # ('O\\047Reilly', date '1972-01-01')"
+                           # (E'O\\047Reilly', date '1972-01-01')"
 insert.exec
 </programlisting>
 </para>
@@ -134,7 +134,7 @@ update = Update.new('person', connection)
 update.set('married', true)
 update.where(['name = %s', 'Smith'])
 p update.statement                # "update person set married = true where 
-                                  # name = 'Smith'"
+                                  # name = E'Smith'"
 update.exec
 </programlisting>
 </para>

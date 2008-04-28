@@ -139,8 +139,8 @@ module SqlPostgres
     #   p Translate.substitute_values(['foo'])                 # "foo"
     #   p Translate.substitute_values(['%s + %s', 1, 2])       # "1 + 2"
     #   p Translate.substitute_values([:in, 1, 2])             # "(1, 2)"
-    #   p Translate.substitute_values([:in, 'foo', 'bar'])     # "('foo', 
-    #                                                          # 'bar')"
+    #   p Translate.substitute_values([:in, 'foo', 'bar'])     # "(E'foo', 
+    #                                                          # E'bar')"
     #**
 
     def substitute_values(expression)
