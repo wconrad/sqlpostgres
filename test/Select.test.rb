@@ -893,6 +893,16 @@ class SelectTest < Test
     end
   end
 
+  def testStatemenIdempotentWithRandomOrder
+    sql = Select.new
+    sql.select('i')
+    sql.from('foo')
+    setenv('RANDOM_SQL_ORDER', '1') do
+      assertEquals(sql.statement, "select i from foo order by random()")
+      assertEquals(sql.statement, "select i from foo order by random()")
+    end
+  end
+
 end
 
 SelectTest.new.run if $0 == __FILE__

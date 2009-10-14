@@ -768,7 +768,7 @@ module SqlPostgres
     end
 
     def order_by_clause
-      order = @order_by
+      order = @order_by.dup
       order << 'random()' if random_order?
       if order.empty?
         ""
