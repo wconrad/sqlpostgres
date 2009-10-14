@@ -517,6 +517,24 @@ module SqlPostgres
       translate_pgresult(connection.exec(statement))
     end
 
+    # Fetch a row or rows from the cursor.  Not intended for consumer
+    # use; it's hanging out here in public for the use of the Cursor
+    # class.
+    #
+    # [cursor_name]
+    #   The cursor's name
+    # [direction]
+    #   A string specifying which row or rows to fetch (see Cursor.fetch)
+    # [connection]
+    #   If present, the connection to use.
+    #   If nil, uses the connection passed to new or, if no connection was
+    #   passed to new, uses the default connection.
+
+    def fetch_by_cursor(cursor_name, direction, connection = @connection)
+      statement = "fetch #{direction} from #{cursor_name}"
+      translate_pgresult(connection.exec(statement))
+    end
+
     private
 
     Column = Struct.new(:value, :as, :converter)

@@ -10,6 +10,9 @@ distclean:
 	rm -rf doc/rdoc 
 	rm -f doc/manual.html
 	rm -f examples-stamp
+	rm -rf debian/libsqlpostgres-ruby1.8
+	rm debian/libsqlpostgres-ruby1.8.debhelper.log
+	rm debian/libsqlpostgres-ruby1.8.substvars
 
 .PHONY: install
 install:
