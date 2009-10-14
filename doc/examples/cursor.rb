@@ -23,11 +23,13 @@ Connection.open do |connection|
     select.from('foo')
     Cursor.new('my_cursor', select, {}, connection) do |cursor|
       while !(rows = cursor.fetch).empty?
-        p rows #OUTPUT
-               #OUTPUT
-               #OUTPUT
-               #OUTPUT
-               #OUTPUT
+        for row in rows
+          p row # OUTPUT
+                # OUTPUT
+                # OUTPUT
+                # OUTPUT
+                # OUTPUT
+          end
       end
     end
   end

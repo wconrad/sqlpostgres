@@ -10,15 +10,21 @@ module SqlPostgres
   #     select.from('foo')
   #     Cursor.new('my_cursor', select, {}, connection) do |cursor|
   #       while !(rows = cursor.fetch).empty?
-  #         p rows #[{"i"=>0}]
-  #                #[{"i"=>1}]
-  #                #[{"i"=>2}]
-  #                #[{"i"=>3}]
-  #                #[{"i"=>4}]
+  #         for row in rows
+  #           p row # {"i"=>0}
+  #                 # {"i"=>1}
+  #                 # {"i"=>2}
+  #                 # {"i"=>3}
+  #                 # {"i"=>4}
+  #           end
   #       end
   #     end
   #   end
   #**
+  #
+  # Fetching a single row at a time, the default for fetch, is slow.
+  # Usually you will want to speed things up by calling, for example,
+  # fetch(1000).
 
   class Cursor
 
@@ -48,10 +54,9 @@ module SqlPostgres
     def initialize(name, select, opts = {}, connection = Connection.default)
       if block_given?
         cursor = self.class.new(name, select, opts, connection)
-        begin
-          yield(cursor)
-          cursor.close
-        end
+        result = yield(cursor)
+        cursor.close
+        result
       else
         @name = name
         @select = select
@@ -83,6 +88,17 @@ module SqlPostgres
     
     def fetch(direction = 'NEXT')
       @select.fetch_by_cursor(@name, direction, @connection)
+    end
+
+    # Seek a cursor.  Works exactly the same (and takes the same
+    # arguments) as fetch, but returns no rows.
+    #
+    # [direction]
+    #   See #fetch
+
+    def move(direction = 'NEXT')
+      statement = "move #{direction} from #{@name}"
+      @connection.exec(statement)
     end
 
     # Close the cursor.  Once closed, it may closed or fetched from

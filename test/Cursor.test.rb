@@ -34,7 +34,7 @@ class CursorTest < Test
         sql = Select.new
         sql.select('i')
         sql.from(table1)
-        cursor = Cursor.new('cursor1', sql, {}, connection) do |cursor|
+        Cursor.new('cursor1', sql, {}, connection) do |cursor|
           assertEquals(cursor.fetch, [{'i'=>0}])
         end
       end
@@ -116,10 +116,9 @@ class CursorTest < Test
 
   def testScroll
     cursor_setup do |connection|
-      cursor = nil
       Transaction.new(connection) do
         sql = select_too_complex_for_backwards_fetch_without_scroll_option
-        cursor = Cursor.new('cursor1', sql, {:scroll=>true}, connection) do |cursor|
+        Cursor.new('cursor1', sql, {:scroll=>true}, connection) do |cursor|
           assertEquals(cursor.fetch, [{'i'=>0}])
           assertEquals(cursor.fetch, [{'i'=>2}])
           assertEquals(cursor.fetch('PRIOR'), [{'i'=>0}])
@@ -131,12 +130,25 @@ class CursorTest < Test
 
   def testDefaultScroll
     cursor_setup do |connection|
-      cursor = nil
       Transaction.new(connection) do
         sql = select_too_complex_for_backwards_fetch_without_scroll_option
         cursor = Cursor.new('cursor1', sql, {}, connection)
         assertException(PGError, /cursor can only scan forward/) do
           cursor.fetch('PRIOR')
+        end
+      end
+    end
+  end
+
+  def testMove
+    cursor_setup do |connection|
+      Transaction.new(connection) do
+        sql = Select.new
+        sql.select('i')
+        sql.from(table1)
+        Cursor.new('cursor1', sql, {}, connection) do |cursor|
+          cursor.move("absolute 2")
+          assertEquals(cursor.fetch, [{'i'=>2}])
         end
       end
     end
