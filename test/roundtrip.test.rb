@@ -148,15 +148,15 @@ class RoundTripTest < Test
           "\\668G\345\256L\245",
         ],
       ],
-# BUSTED
-#       [
-#         ["bytea[]"],
-#         [
-#           [["foo", "bar"], ["baz", "quux"]],
-#           ["\\", "\000", allCharacters],
-#           nil
-#         ]
-#       ],
+      # FIXME
+      #[
+      #  ["bytea[]"],
+      #  [
+      #    [["foo", "bar"], ["baz", "quux"]],
+      #    ["\\", "\000", allCharacters],
+      #    nil
+      #  ]
+      #],
       [
         ["timestamp", "timestamp without time zone"],
         [

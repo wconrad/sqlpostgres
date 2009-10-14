@@ -169,10 +169,10 @@ class TranslateTest < Test
   def test_escape_qchar
     test_cases = [
       [nil, 'null'],
-      ["\000", %q"'\\000'"],
-      ["\001", %q"'\\001'"],
-      ["\377", %q"'\\377'"],
-      ["a", "'\\141'"],
+      ["\000", %q"E'\\000'"],
+      ["\001", %q"E'\\001'"],
+      ["\377", %q"E'\\377'"],
+      ["a", "E'\\141'"],
     ]
     for raw, escaped in test_cases
       assertInfo("For raw=#{raw.inspect}") do

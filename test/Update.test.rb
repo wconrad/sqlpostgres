@@ -71,7 +71,7 @@ class UpdateTest < Test
     makeTestConnection do |connection|
       connection.exec("create temporary table #{table1} (t text)")
       connection.exec("insert into #{table1} values ('Smith')")
-      connection.exec("insert into #{table1} values ('O\\'Brien')")
+      connection.exec("insert into #{table1} values (E'O\\'Brien')")
       update = Update.new(table1, connection)
       update.set('t', 'Tam')
       update.where(['t = %s', "O'Brien"])

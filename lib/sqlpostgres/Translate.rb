@@ -347,7 +347,7 @@ module SqlPostgres
       if s.nil?
         "null"
       else
-        "'" + escape_char(s[0]) + "'"
+        "E'" + escape_char(s[0]) + "'"
       end
     end
     module_function :escape_qchar
