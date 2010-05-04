@@ -1,4 +1,4 @@
-libsqlpostgres-ruby1.8 (0.1.25) unstable; urgency=low
+libsqlpostgres-ruby1.8 (0.1.26) unstable; urgency=low
 
   * added hook to Select for easier testing
 
