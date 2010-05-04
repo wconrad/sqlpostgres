@@ -1,3 +1,10 @@
+libsqlpostgres-ruby1.8 (0.1.25+nmu1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * added hook to Select for easier testing
+
+ -- Sam <sam@bilbo.internal.databill.com>  Tue, 04 May 2010 15:52:16 -0700
+
 libsqlpostgres-ruby1.8 (0.1.25) unstable; urgency=low
 
   * Added "MOVE" command to cursors

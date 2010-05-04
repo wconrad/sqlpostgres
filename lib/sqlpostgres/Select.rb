@@ -514,7 +514,7 @@ module SqlPostgres
     #   passed to new, uses the default connection.
 
     def exec(connection = @connection)
-      translate_pgresult(connection.exec(statement))
+      query_and_translate(connection, statement)
     end
 
     # Fetch a row or rows from the cursor.  Not intended for consumer
@@ -858,6 +858,13 @@ module SqlPostgres
         end
         hash
       end
+    end
+
+    # This is a hook for rspec (mock this method to find out what sql
+    # is being executed, and to inject translated results).
+
+    def query_and_translate(connection, statement)
+      translate_pgresult(connection.exec(statement))
     end
 
   end

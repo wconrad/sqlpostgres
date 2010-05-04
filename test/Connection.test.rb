@@ -219,7 +219,7 @@ class ConnectionTest < Test
 
   def testRealException
     Connection.open(testDbArgs) do |connection|
-      assertException(PGError, /ERROR:  (Attribute "foo" not found|column "foo" does not exist( at character 8)?)\nThe offending statement is: "select foo;"/) do
+      assertException(PGError, /ERROR:  (Attribute "foo" not found|column "foo" does not exist)/) do 
         connection.exec("select foo;")
       end
     end
