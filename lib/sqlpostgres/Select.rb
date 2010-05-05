@@ -532,7 +532,7 @@ module SqlPostgres
 
     def fetch_by_cursor(cursor_name, direction, connection = @connection)
       statement = "fetch #{direction} from #{cursor_name}"
-      translate_pgresult(connection.exec(statement))
+      query_and_translate(connection, statement)
     end
 
     private
@@ -843,28 +843,8 @@ module SqlPostgres
       end
     end
 
-    def translate_pgresult(pgresult)
-      pgresult.result.collect do |row|
-        hash = {}
-        @columns.each_with_index do |column, i|
-          unless column.converter.nil?
-            typeCode = pgresult.type(i)
-            value = row[i]
-            args = [value]
-            args << typeCode if column.converter.arity == 2
-            hash[column.as || column.value] = 
-              value && column.converter.call(*args)
-          end
-        end
-        hash
-      end
-    end
-
-    # This is a hook for rspec (mock this method to find out what sql
-    # is being executed, and to inject translated results).
-
     def query_and_translate(connection, statement)
-      translate_pgresult(connection.exec(statement))
+      connection.exec_and_translate(statement, @columns)
     end
 
   end

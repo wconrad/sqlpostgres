@@ -152,6 +152,32 @@ module SqlPostgres
       exec(statement).result
     end
 
+    # This is a hook for rspec (mock this method to find out what sql
+    # is being executed, and to inject translated results).
+
+    def exec_and_translate(statement, columns)
+      translate_pgresult(exec(statement), columns)
+    end
+
+    private
+
+    def translate_pgresult(pgresult, columns)
+      pgresult.result.collect do |row|
+        hash = {}
+        columns.each_with_index do |column, i|
+          unless column.converter.nil?
+            typeCode = pgresult.type(i)
+            value = row[i]
+            args = [value]
+            args << typeCode if column.converter.arity == 2
+            hash[column.as || column.value] = 
+              value && column.converter.call(*args)
+          end
+        end
+        hash
+      end
+    end
+
   end
 
 end
