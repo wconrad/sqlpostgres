@@ -17,7 +17,7 @@ class InsertTest < Test
       select.select_literal(1)
       insert = Insert.new(table1, connection)
       insert.insert('i', select)
-      insert.exec
+      ret = insert.exec
       assertEquals(connection.query("select i from #{table1}"),
                    [["1"]])
     end
@@ -92,6 +92,21 @@ class InsertTest < Test
       insert.exec
       assertEquals(connection.query("select i from #{table1}"),
                    [["0"]])
+    end
+  end
+
+  def testInsertReturning
+    makeTestConnection do |connection|
+      connection.exec("create temporary table #{table1} (i int)")
+      insert = Insert.new(table1, connection)
+      insert.insert('i', 2)
+      insert.returning('i * 3', 'calc')
+      assertEquals(insert.statement, 
+                   "insert into #{table1} (i) values (2) returning i * 3 as calc")
+      ret = insert.exec
+      assertEquals(connection.query("select i from #{table1}"),
+                   [["2"]])
+      assertEquals(ret.result, [["6"]])
     end
   end
 

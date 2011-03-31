@@ -197,6 +197,28 @@ module SqlPostgres
       @query = select.statement
     end
 
+    # Define return clause
+    #
+    # Example: (simple)
+    #** Example: insert_returning
+    #   insert = Insert.new('foo')
+    #   insert.insert('i', 3)
+    #   insert.returning('i')
+    #   p insert.statement       # "insert into foo (i) values (3) returning i
+    #
+    # Example: (expression_with_alias)
+    #** Example: insert_returning_with_alias
+    #   insert = Insert.new('foo')
+    #   insert.insert('i', 3)
+    #   insert.returning('i*3', 'calc')
+    #   p insert.statement       # "insert into foo (i) values (3) returning i*3 as calc
+
+    def returning(expression, name=nil)
+      str = "returning #{expression}"
+      str += " as #{name}" if name
+      @returning_expression = str
+    end
+
     # insert default values
     #
     # Example:
@@ -243,7 +265,7 @@ module SqlPostgres
     end
 
     def source
-      "values (#{@values.join(', ')})"
+      "values (#{@values.join(', ')}) #{@returning_expression}".strip
     end
 
   end
