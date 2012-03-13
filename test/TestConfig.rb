@@ -6,7 +6,7 @@ module TestConfig
 
   # The name of the database to use for testing.
 
-  TEST_DB_NAME = ""
+  TEST_DB_NAME = "sqlpostgres_test"
 
   # The prefix for temporary database objects.
 

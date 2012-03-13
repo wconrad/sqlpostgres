@@ -1,9 +1,11 @@
 require 'Assert'
+require 'TestUtil'
 
 class Test
   
   include Assert
-  
+  include TestUtil
+
   private
   
   def allInstanceMethods
@@ -14,6 +16,7 @@ class Test
   public
   
   def doRun
+    testForTestDb
     allInstanceMethods.each { |methodName|
       case methodName
       when /^skip_test/

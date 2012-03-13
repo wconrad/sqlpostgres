@@ -252,7 +252,7 @@ class TranslateTest < Test
 
   def testEscapeSql_AllCharValues
     tableName = testTableName("foo")
-    Connection.open do |connection|
+    Connection.open(testDbArgs) do |connection|
       connection.exec("begin transaction;")
       connection.exec("create temporary table #{tableName} "\
                       "(i int, t text);")

@@ -9,6 +9,20 @@ module TestUtil
     {'db_name'=>TEST_DB_NAME}
   end
 
+  def testForTestDb
+    begin
+      Connection.new(testDbArgs)
+    rescue PGError => message
+      puts "Creating test database"
+      system("psql -c 'create database #{TEST_DB_NAME}' template1 > /dev/null 2>&1")
+    end
+  end
+
+  def removeTestDb
+    puts "Removing test database"
+    system("psql -c 'drop database #{TEST_DB_NAME}' template1 > /dev/null 2>&1")
+  end
+
   def makeTestConnection
     if block_given?
       Connection.open(testDbArgs) do |connection|

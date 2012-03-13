@@ -38,7 +38,7 @@ class ConnectionTest < Test
   end
 
   def testOpen_RealConnection_SelectDatabase
-    dbName = "sqlpostgres_test"
+    dbName = "sqlpostgres_test1"
     Connection.open(testDbArgs) do |connection1|
       connection1.exec("create database #{dbName}")
       begin
@@ -212,7 +212,7 @@ class ConnectionTest < Test
 
   def testStatement_In_Exception
     for value in [false, true]
-      connection = Connection.new('statement_in_exception'=>value)
+      connection = Connection.new(testDbArgs.merge('statement_in_exception'=>value))
       assertEquals(connection.statement_in_exception, value)
     end
   end
