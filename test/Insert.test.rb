@@ -106,7 +106,7 @@ class InsertTest < Test
       ret = insert.exec
       assertEquals(connection.query("select i from #{table1}"),
                    [["2"]])
-      assertEquals(ret.result, [["6"]])
+      assertEquals(ret.values, [["6"]])
     end
   end
 

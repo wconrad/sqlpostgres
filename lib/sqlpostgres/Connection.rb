@@ -4,7 +4,7 @@ module SqlPostgres
 
   class Connection
 
-    require 'postgres'
+    require 'pg'
 
     # If true, then PGError exceptions have the offending statement
     # added to them.
@@ -16,7 +16,7 @@ module SqlPostgres
 
     attr_reader :pgconn
 
-    @@pgClass = PGconn
+    @@pgClass = PG
     @@default = nil
 
     # Get the default connection.  If there isn't one, returns the
@@ -149,7 +149,8 @@ module SqlPostgres
     # true, then statement is added to the exception.
 
     def query(statement)
-      exec(statement).result
+      result = exec(statement)
+      result.send(result_method(result))
     end
 
     # This is a hook for rspec (mock this method to find out what sql
@@ -161,12 +162,20 @@ module SqlPostgres
 
     private
 
+    def result_method(result)
+      if result.respond_to?(:result)
+        :result
+      else
+        :values
+      end
+    end
+
     def translate_pgresult(pgresult, columns)
-      pgresult.result.collect do |row|
+      pgresult.values.collect do |row|
         hash = {}
         columns.each_with_index do |column, i|
           unless column.converter.nil?
-            typeCode = pgresult.type(i)
+            typeCode = pgresult.ftype(i)
             value = row[i]
             args = [value]
             args << typeCode if column.converter.arity == 2
