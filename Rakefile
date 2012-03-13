@@ -13,3 +13,10 @@ task :docs do
   system 'doc/makerdoc'
   system `xmlto -o $(dir $@) html-nochunks $<`
 end
+
+desc "Publish gems"
+task :publish do
+  Rake::Task[:build].invoke
+  system "scp *.gem production@isengard:/var/www/gems/gems/"
+  system "ssh production@isengard 'gem generate_index -d /var/www/gems'"
+end
