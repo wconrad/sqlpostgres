@@ -1,3 +1,5 @@
+require 'pg'
+
 # sqlpostgres is a wrapper around the venerable Ruby postgres library.
 # sqlpostgres builds and executes insert, update and select
 # statements.  sqlpostgres statements are easier to read and maintain
