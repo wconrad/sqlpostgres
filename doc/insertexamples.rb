@@ -1,4 +1,4 @@
-#!/usr/bin/ruby1.8
+#!/usr/bin/env ruby
 
 Dir.chdir(File.dirname(__FILE__))
 require '../tools/exampleinserter/ExampleInserter'

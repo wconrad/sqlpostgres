@@ -1,4 +1,4 @@
-#!/usr/bin/ruby1.8
+#!/usr/bin/env ruby
 
 #$: << File.dirname(__FILE__)
 require 'tempfile'

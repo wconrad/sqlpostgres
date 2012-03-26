@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 # Parse a Ruby source file, building a set of objects
 # representing the modules, classes, methods,
