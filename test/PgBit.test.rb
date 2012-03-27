@@ -16,7 +16,7 @@ class PgBitTest < Test
   def test_ctor_and_accessors
     bits = (0..4).collect do rand(2) end
     assertEquals(PgBit.new(bits).bits, bits)
-    assertEquals(PgBit.new(bits.to_s).bits, bits)
+    assertEquals(PgBit.new(bits.join.to_s).bits, bits)
   end
 
   def test_from_sql

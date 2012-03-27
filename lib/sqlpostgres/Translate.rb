@@ -198,7 +198,7 @@ module SqlPostgres
     private_class_method :escape_bytea_quote
 
     def escape_array_noquote(a, &escaper)
-      pieces = a.collect do |e|
+      pieces = Array(a).map do |e|
         if e.is_a?(Array)
           escape_array_noquote(e, &escaper)
         else
@@ -273,7 +273,7 @@ module SqlPostgres
     def escape_bytea(s)
       return "null" if s.nil?
       return "default" if s == :default
-      "E'" + PGconn.escape_bytea(s) + "'"
+      "E'" + PGconn.escape_bytea(Array(s).join) + "'"
     end
     module_function :escape_bytea
 
@@ -289,6 +289,9 @@ module SqlPostgres
     # Unescape a bytea string read from postgres.
 
     def unescape_bytea(s)
+      if s.respond_to?(:force_encoding)
+        s = s.force_encoding("ASCII-8BIT")
+      end
       s.gsub(/\\(\\|[0-3][0-7][0-7])/) do
         if $1 == "\\"
           "\\"
@@ -347,7 +350,7 @@ module SqlPostgres
       if s.nil?
         "null"
       else
-        "E'" + escape_char(s[0]) + "'"
+        "E'" + escape_char(s[0].ord) + "'"
       end
     end
     module_function :escape_qchar
@@ -405,7 +408,7 @@ module SqlPostgres
 
     def string_to_sql(thing, backslashes)
       "E'" + thing.gsub(/[\x0-\x1f\x80-\xff'\\]/) do |c|
-        escape_char(c[0], backslashes)
+        escape_char(c[0].ord, backslashes)
       end + "'"
     end
     module_function :string_to_sql

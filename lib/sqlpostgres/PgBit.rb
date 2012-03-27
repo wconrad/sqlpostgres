@@ -43,7 +43,7 @@ module SqlPostgres
     # Return a string representation (ie "01011").
 
     def to_s
-      bits.to_s
+      bits.join
     end
 
     protected

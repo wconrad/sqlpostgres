@@ -64,7 +64,13 @@ module TestUtil
   end
 
   def allCharacters(floor = 0)
-    (floor..255).to_a.collect do |i| i.chr end.join
+    s = (floor..255).to_a.collect do |i|
+      i.chr
+    end.join
+    if s.respond_to?(:force_encoding)
+      s = s.force_encoding('ASCII-8BIT')
+    end
+    s
   end
 
   def setenv(name, value)
