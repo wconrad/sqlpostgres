@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    sqlpostgres (1.2.1)
+      pg (>= 0.12.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    pg (0.13.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  pg (>= 0.12.0)
+  sqlpostgres!

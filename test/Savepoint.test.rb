@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+require 'bundler/setup'
 $:.unshift(File.dirname(__FILE__))
 require 'TestSetup'
 
