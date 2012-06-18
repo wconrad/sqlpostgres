@@ -185,18 +185,30 @@ class TranslateTest < Test
 
   def test_escape_bytea
     testCases = [
-      [nil, 'null'],
-      [:default, "default"],
-      ["", "E''"],
-      ["foo", %q"E'foo'"],
-      ["\000\037 ", %q"E'\\\\000\\\\037 '"],
-      ["'\\", %q"E'''\\\\\\\\'"],
-      ["~\177\377", "E'~\\\\177\\\\377'"],
+      [nil, 'null', 'null'],
+      [:default, "default", "default"],
+      ["", "''", "'\\x'"],
+      ["foo", %q"'foo'", %q"'\\x666f6f'"],
+      ["\000\037 ", %q"'\\000\\037 '", %q"'\\x001f20'"],
+      ["'\\", %q"'''\\\\'", %q"'\\x275c'"],
+      ["~\177\377", "'~\\177\\377'", "'\\x7e7fff'"],
     ]
-    for testCase in testCases
-      assertInfo("For test case #{testCase.inspect}") do
-        raw, escaped = *testCase
-        assertEquals(Translate.escape_bytea(raw), escaped)
+    makeTestConnection do |connection|
+      pgconn = connection.pgconn
+      for testCase in testCases
+        assertInfo("For test case #{testCase.inspect}") do
+          raw, escaped_84, escaped_90 = *testCase
+          escaped = if pgconn.server_version < 9_00_00
+                      escaped_84
+                    else
+                      escaped_90
+                    end
+          if pgconn.server_version < 9_01_00
+            escaped = escaped.gsub("\\", "\\\\\\")
+            escaped = 'E' + escaped if raw.is_a?(String)
+          end
+          assertEquals(Translate.escape_bytea(raw, pgconn), escaped)
+        end
       end
     end
   end
@@ -207,7 +219,9 @@ class TranslateTest < Test
       ["abc", "abc"],
       ["\\\\", "\\"],
       ["\\001", "\001"],
+      ["\\x01", "\001"],
       ["\\037", "\037"],
+      ["\\x1f", "\037"],
       ["\\177", "\177"],
       ["\\200", "\200"],
       ["\\377", "\377"],
@@ -216,11 +230,18 @@ class TranslateTest < Test
       ["\\378", "\\378"],
       ["\\n", "\\n"],
       ["abc\\", "abc\\"],
+      ["\\x779c", "w\234"]
     ]
-    for testCase in testCases
-      assertInfo("For test case #{testCase.inspect}") do
-        escaped, raw = *testCase
-        assertEquals(Translate.unescape_bytea(escaped), raw)
+    makeTestConnection do |connection|
+      pgconn = connection.pgconn
+      for testCase in testCases
+        assertInfo("For test case #{testCase.inspect}") do
+          escaped, raw = *testCase
+          if pgconn.server_version < 9_00_00 && escaped =~ /^\\x/
+            raw = escaped
+          end
+          assertEquals(Translate.unescape_bytea(escaped, pgconn), raw)
+        end
       end
     end
   end
@@ -274,7 +295,7 @@ class TranslateTest < Test
           row = rows.assoc(i.to_s)
           char_number, text, length = *row
           assertEquals(length.to_i, 1)
-          c = Translate.unescape_text(text)
+          c = Translate.unescape_text(text, connection.pgconn)
           assertEquals(c, i.chr)
         end
       end

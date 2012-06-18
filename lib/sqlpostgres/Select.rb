@@ -609,29 +609,29 @@ module SqlPostgres
 
     # Converters used to translate strings into Ruby types.
 
-    BitConverter = proc { |s| PgBit.from_sql(s) }
-    BooleanConverter = proc { |s| s == 't' }
-    BoxConverter = proc { |s| PgBox.from_sql(s) }
-    ByteaConverter = proc { |s| Translate.unescape_bytea(s) }
-    CidrConverter = proc { |s| PgCidr.from_sql(s) }
-    CircleConverter = proc { |s| PgCircle.from_sql(s) }
-    DateConverter = proc { |s| Translate.sql_to_date(s) }
-    FloatConverter = proc { |s| s.to_f }
-    InetConverter = proc { |s| PgInet.from_sql(s) }
-    IntegerConverter = proc { |s| s.to_i }
-    IntervalConverter = proc { |s| PgInterval.from_sql(s) }
-    LsegConverter = proc { |s| PgLineSegment.from_sql(s) }
-    MacAddrConverter = proc { |s| PgMacAddr.from_sql(s) }
-    PathConverter = proc { |s| PgPath.from_sql(s) }
-    PointConverter = proc { |s| PgPoint.from_sql(s) }
-    PolygonConverter = proc { |s| PgPolygon.from_sql(s) }
-    QCharConverter = proc { |s| Translate.unescape_qchar(s) }
-    StringConverter = proc { |s| s }
-    TimeConverter = proc { |s| PgTime.from_sql(s) }
-    TimeStringConverter = proc { |s| Time.local(*s.split(/:/)) }
-    TimeWithTimeZoneConverter = proc { |s| PgTimeWithTimeZone.from_sql(s) }
-    TimestampConverter = proc { |s| PgTimestamp.from_sql(s) }
-    TimestampTzConverter = proc { |s| Translate.sql_to_datetime(s) }
+    BitConverter = proc { |s, server_version| PgBit.from_sql(s) }
+    BooleanConverter = proc { |s, server_version| s == 't' }
+    BoxConverter = proc { |s, server_version| PgBox.from_sql(s) }
+    ByteaConverter = proc { |s, server_version| Translate.unescape_bytea(s, server_version) }
+    CidrConverter = proc { |s, server_version| PgCidr.from_sql(s) }
+    CircleConverter = proc { |s, server_version| PgCircle.from_sql(s) }
+    DateConverter = proc { |s, server_version| Translate.sql_to_date(s) }
+    FloatConverter = proc { |s, server_version| s.to_f }
+    InetConverter = proc { |s, server_version| PgInet.from_sql(s) }
+    IntegerConverter = proc { |s, server_version| s.to_i }
+    IntervalConverter = proc { |s, server_version| PgInterval.from_sql(s) }
+    LsegConverter = proc { |s, server_version| PgLineSegment.from_sql(s) }
+    MacAddrConverter = proc { |s, server_version| PgMacAddr.from_sql(s) }
+    PathConverter = proc { |s, server_version| PgPath.from_sql(s) }
+    PointConverter = proc { |s, server_version| PgPoint.from_sql(s) }
+    PolygonConverter = proc { |s, server_version| PgPolygon.from_sql(s) }
+    QCharConverter = proc { |s, server_version| Translate.unescape_qchar(s) }
+    StringConverter = proc { |s, server_version| s }
+    TimeConverter = proc { |s, server_version| PgTime.from_sql(s) }
+    TimeStringConverter = proc { |s, server_version| Time.local(*s.split(/:/)) }
+    TimeWithTimeZoneConverter = proc { |s, server_version| PgTimeWithTimeZone.from_sql(s) }
+    TimestampConverter = proc { |s, server_version| PgTimestamp.from_sql(s) }
+    TimestampTzConverter = proc { |s, server_version| Translate.sql_to_datetime(s) }
 
     # Map each base (non-array) type to a converter.
 
@@ -705,7 +705,7 @@ module SqlPostgres
       Types::ARRAY_VARCHAR => Types::VARCHAR,
     }
 
-    AutoConverter = proc { |s, type_code|
+    AutoConverter = proc { |s, pgconn, type_code|
       array_element_type = ARRAY_ELEMENT_TYPES[type_code]
       if !array_element_type.nil?
         s = Translate.sql_to_array(s)
@@ -713,7 +713,7 @@ module SqlPostgres
       end
       converter = CONVERTERS[type_code] || StringConverter
       Translate.deep_collect(s) do |e|
-        converter.call(e)
+        converter.call(e, pgconn)
       end
     }
 

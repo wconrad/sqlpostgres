@@ -10,7 +10,7 @@ module TestConfig
 
   # The database port to use for testing.
 
-  TEST_DB_PORT = 5433 #DEBUG
+  TEST_DB_PORT = ENV['PGPORT'] || 5432
 
   # The prefix for temporary database objects.
 

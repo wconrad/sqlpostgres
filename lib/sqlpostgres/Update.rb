@@ -99,7 +99,7 @@ module SqlPostgres
     #**
 
     def set_bytea(column, value)
-      @set_clauses << [column, Translate.escape_bytea(value)].join(' = ')
+      @set_clauses << [column, Translate.escape_bytea(value, @connection.pgconn)].join(' = ')
     end
 
     # Set a column to an array.
