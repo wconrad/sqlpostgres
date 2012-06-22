@@ -711,10 +711,7 @@ module SqlPostgres
         s = Translate.sql_to_array(s)
         type_code = array_element_type
       end
-      converter = CONVERTERS[type_code]
-      if converter.nil?
-        raise "Unknown column type code: #{type_code}"
-      end
+      converter = CONVERTERS[type_code] || StringConverter
       Translate.deep_collect(s) do |e|
         converter.call(e)
       end

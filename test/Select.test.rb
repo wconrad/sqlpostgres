@@ -905,6 +905,20 @@ class SelectTest < Test
     end
   end
 
+  def test_enum
+    enum_name = "foo"
+    makeTestConnection do |db1|
+      db1.exec("begin")
+      db1.exec("create type #{enum_name} as enum ('foo', 'bar', 'baz')")
+      db1.exec("create temporary table #{table1} (e #{enum_name})")
+      db1.exec("insert into #{table1} (e) values ('foo')")
+      sql = Select.new(db1)
+      sql.select('e')
+      sql.from(table1)
+      assertEquals(sql.exec, [{'e' => 'foo'}])
+    end
+  end
+
 end
 
 SelectTest.new.run if $0 == __FILE__

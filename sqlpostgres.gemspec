@@ -1,8 +1,8 @@
 require 'rake'
 Gem::Specification.new do |spec|
   spec.name = 'sqlpostgres'
-  spec.version = '1.2.2'
-  spec.date = '2012-04-17'
+  spec.version = '1.2.3'
+  spec.date = '2012-06-22'
   spec.add_dependency('pg', '>= 0.12.0')
   spec.summary = 'sqL wrapper for the PG gem'
   spec.description = 'SQL wrapper for the PG gem'
