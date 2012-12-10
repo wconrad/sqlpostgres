@@ -273,56 +273,19 @@ module SqlPostgres
     def escape_bytea(s, pgconn)
       return "null" if s.nil?
       return "default" if s == :default
-      value = "'" + pgconn.escape_bytea(Array(s).join) + "'"
+      raise s.inspect if s.is_a?(Array) #DEBUG
+      value = "'" + pgconn.escape_bytea(s) + "'"
       value = "E" + value if pgconn.server_version < 9_01_00
       value
     end
     module_function :escape_bytea
 
-    # Unescape hex escape sequences, turning them back into bytes.
-
-    def unescape_hex_escapes(s)
-      s.gsub(/(..)/) do
-        $1.hex.chr
-      end
-    end
-    module_function :unescape_hex_escapes
-
-    # Unescape octal escape sequences, turning them back into bytes.
-
-    def unescape_octal_escapes(s)
-      s.gsub(/\\(\d{3})/) do
-        $1.oct.chr
-      end.gsub(/\\\\/, '\\')
-    end
-    module_function :unescape_octal_escapes
-
     # Unescape a bytea string read from postgres.
 
     def unescape_bytea(s, pgconn)
-      if s.respond_to?(:force_encoding)
-        s = s.force_encoding("ASCII-8BIT")
-      end
-      if pgconn.server_version >= 9_00_00 && s =~ /^\\x/
-        unescape_hex_escapes(s[2..-1])
-      else
-      s.gsub(/\\(\\|[0-3][0-7][0-7])/) do
-        if $1 == "\\"
-          "\\"
-        else
-          $1.oct.chr
-        end
-      end
-      end
+      pgconn.unescape_bytea(s)
     end
     module_function :unescape_bytea
-
-    # Unescape a text string read from postges.
-
-    def unescape_text(s, pgconn)
-      unescape_bytea(s, pgconn)
-    end
-    module_function :unescape_text
 
     # Convert a time to SQL format, including microseconds:
     # (YYYY-mm-dd HH:MM:SS.uuuuuu)
