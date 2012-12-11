@@ -8,6 +8,10 @@ module TestConfig
 
   TEST_DB_NAME = "sqlpostgres_test"
 
+  # The database port to use for testing.
+
+  TEST_DB_PORT = 5432
+
   # The prefix for temporary database objects.
 
   TEST_DB_PREFIX = "SQLPOSTGRES_TEST_"
