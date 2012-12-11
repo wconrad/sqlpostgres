@@ -6,7 +6,10 @@ module TestUtil
   include SqlPostgres
 
   def testDbArgs
-    {'db_name'=>TEST_DB_NAME}
+    {
+      'db_name' => TEST_DB_NAME,
+      'port'=> TEST_DB_PORT,
+    }
   end
 
   def testForTestDb
@@ -14,13 +17,23 @@ module TestUtil
       Connection.new(testDbArgs)
     rescue PGError => message
       puts "Creating test database"
-      system("psql -c 'create database #{TEST_DB_NAME}' template1 > /dev/null 2>&1")
+      run_psql "create database #{TEST_DB_NAME}"
     end
   end
 
   def removeTestDb
     puts "Removing test database"
-    system("psql -c 'drop database #{TEST_DB_NAME}' template1 > /dev/null 2>&1")
+    run_psql "drop database #{TEST_DB_NAME}"
+  end
+
+  def run_psql(command)
+    command = "psql -p #{TEST_DB_PORT} -c '#{command}' 2>&1"
+    output = `#{command}`
+    if $? != 0
+      $stderr.puts "Failed: #{command}"
+      $stderr.print output
+      exit(1)
+    end
   end
 
   def makeTestConnection

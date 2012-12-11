@@ -44,7 +44,7 @@ class ConnectionTest < Test
     Connection.open(testDbArgs) do |connection1|
       connection1.exec("create database #{dbName}")
       begin
-        Connection.open('db_name'=>dbName) do |connection2|
+        Connection.open(testDbArgs.merge('db_name'=>dbName)) do |connection2|
            rows = connection2.query("select current_database();")
            assertEquals(rows[0][0], dbName)
         end
