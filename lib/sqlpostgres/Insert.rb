@@ -140,7 +140,7 @@ module SqlPostgres
 
     def insert_bytea(column, value = :no_value)
       @columns << column
-      @values << Translate.escape_bytea(value) unless value == :no_value
+      @values << Translate.escape_bytea(value, @connection.pgconn) unless value == :no_value
     end
 
     # Insert into a bytea[] (bytea array) column.  You must use this

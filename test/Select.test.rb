@@ -231,7 +231,7 @@ class SelectTest < Test
   def testUserConversion
     makeTestConnection do |connection|
       select = Select.new(connection)
-      select.select(["%s", "abc"], 'letters') do |s|
+      select.select(["%s", "abc"], 'letters') do |s, server_version|
         s.scan(/./)
       end
       assertEquals(select.exec, [{'letters'=>['a', 'b', 'c']}])

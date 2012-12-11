@@ -9,6 +9,7 @@ module TestUtil
     {
       'db_name' => TEST_DB_NAME,
       'port'=> TEST_DB_PORT,
+      'encoding' => 'SQL_ASCII',
     }
   end
 
@@ -17,7 +18,7 @@ module TestUtil
       Connection.new(testDbArgs)
     rescue PGError => message
       puts "Creating test database"
-      run_psql "create database #{TEST_DB_NAME}"
+      run_psql "create database #{TEST_DB_NAME} with encoding 'SQL_ASCII' template template0"
     end
   end
 
@@ -27,7 +28,7 @@ module TestUtil
   end
 
   def run_psql(command)
-    command = "psql -p #{TEST_DB_PORT} -c '#{command}' 2>&1"
+    command = "psql -p #{TEST_DB_PORT} -c #{command.inspect} 2>&1"
     output = `#{command}`
     if $? != 0
       $stderr.puts "Failed: #{command}"

@@ -177,8 +177,8 @@ module SqlPostgres
           unless column.converter.nil?
             typeCode = pgresult.ftype(i)
             value = row[i]
-            args = [value]
-            args << typeCode if column.converter.arity == 2
+            args = [value, @pgconn]
+            args << typeCode if column.converter.arity == 3
             hash[column.as || column.value] = 
               value && column.converter.call(*args)
           end
