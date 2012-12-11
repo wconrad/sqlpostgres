@@ -9,7 +9,7 @@ module TestUtil
     {
       'db_name' => TEST_DB_NAME,
       'port'=> TEST_DB_PORT,
-      'encoding' => 'SQL_ASCII',
+      'encoding' => TEST_CLIENT_ENCODING,
     }
   end
 
@@ -18,7 +18,7 @@ module TestUtil
       Connection.new(testDbArgs)
     rescue PGError => message
       puts "Creating test database"
-      run_psql "create database #{TEST_DB_NAME} with encoding 'SQL_ASCII' template template0"
+      run_psql "create database #{TEST_DB_NAME} with encoding '#{TEST_DB_ENCODING}' template template0"
     end
   end
 

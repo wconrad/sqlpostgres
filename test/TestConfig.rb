@@ -16,6 +16,11 @@ module TestConfig
 
   TEST_DB_PREFIX = "SQLPOSTGRES_TEST_"
 
+  # Encodings
+
+  TEST_CLIENT_ENCODING = 'SQL_ASCII'
+  TEST_DB_ENCODING = 'SQL_ASCII'
+
 end
 
 # Local Variables:
