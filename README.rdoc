@@ -1,0 +1,54 @@
+= sqlpostgres
+
+sqlpostgres is a mini-language for building and execting SQL
+statements against a postgresql database.
+
+This is a very old library, pre-dating active record and lacking many
+of its refinements.  New projects will probably not want to use this.
+
+== INSTALL
+
+    $ gem install USPS-intelligent-barcode
+
+== EXAMPLE
+
+    require "sqlpostgres"
+    
+    include SqlPostgres
+    
+    Connection.open do |connection|
+      connection.exec("create temporary table foo (t text)")
+      
+      insert = Insert.new('foo', connection)
+      insert.insert('t', 'Smith')
+      insert.exec
+      
+      insert = Insert.new('foo', connection)
+      insert.insert('t', 'Jones')
+      insert.exec
+      
+      update = Update.new('foo', connection)
+      update.set('t', "O'Brien")
+      update.where(["t = %s", "Smith"])
+      update.exec  
+      
+      select = Select.new(connection)
+      select.select('t')
+      select.from('foo')
+      select.order_by('t')
+      p select.exec
+      # [{"t"=>"Jones"}, {"t"=>"O'Brien"}]
+      
+    end
+
+== RUBY VERSIONS
+
+The tests are known to pass in MRI 1.8.7 and MRI 1.9.3
+
+== POSTGRES VERSIONS
+
+This library works with Postgres 1.8.  It does not yet fully support Postgres 1.9.
+
+== WHOAMI
+
+Wayne Conrad <wconrad@yagni.com>
