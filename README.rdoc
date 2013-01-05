@@ -47,7 +47,12 @@ The tests are known to pass in MRI 1.8.7 and MRI 1.9.3
 
 == POSTGRES VERSIONS
 
-This library works with Postgres 1.8.  It does not yet fully support Postgres 1.9.
+This library works with Postgres 1.8.  It does not yet fully support
+Postgres 1.9.
+
+== ENCODINGS
+
+This library only works properly with the SQL-ASCII encoding.
 
 == WHOAMI
 
