@@ -1,0 +1,10 @@
+encodings:
+-
+  database_encoding: sql_ascii
+  client_encodings:
+  - sql_ascii
+-
+  database_encoding: unicode
+  client_encodings:
+  - sql_ascii
+  - unicode

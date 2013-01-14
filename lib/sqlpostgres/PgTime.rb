@@ -1,4 +1,4 @@
-require 'sqlpostgres/PgType'
+require File.expand_path('PgType', File.dirname(__FILE__))
 
 module SqlPostgres
 
