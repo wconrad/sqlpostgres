@@ -1,0 +1,6 @@
+postgres_18:
+  host: localhost
+  port: 5433
+postgres_19:
+  host: localhost
+  port: 5432

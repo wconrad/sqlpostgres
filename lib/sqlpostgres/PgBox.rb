@@ -1,4 +1,4 @@
-require 'sqlpostgres/PgTwoPoints'
+require File.expand_path('PgTwoPoints', File.dirname(__FILE__))
 
 module SqlPostgres
 

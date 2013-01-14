@@ -1,4 +1,4 @@
-require 'sqlpostgres/PgWrapper'
+require File.expand_path('PgWrapper', File.dirname(__FILE__))
 
 module SqlPostgres
 

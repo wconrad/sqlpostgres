@@ -9,6 +9,7 @@ GEM
       rake
       rdoc
     json (1.7.6)
+    memoizer (1.0.1)
     pg (0.13.2)
     rake (10.0.3)
     rdoc (3.12)
@@ -27,6 +28,7 @@ PLATFORMS
 
 DEPENDENCIES
   jeweler (~> 1.8.4)
+  memoizer (~> 1.0.1)
   pg (~> 0.13.2)
   rake (~> 10.0.3)
   rspec (~> 2.12.0)

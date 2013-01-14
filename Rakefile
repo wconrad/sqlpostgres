@@ -12,6 +12,9 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
+require File.expand_path('spec/lib/target_database_servers',
+                         File.dirname(__FILE__))
+
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see
@@ -36,7 +39,32 @@ task :test do
   system 'test/test'
 end
 
+namespace 'db' do
+
+  def target_database_servers
+    TestSupport::TargetDatabaseServers.instance
+  end
+
+  desc 'Create test databases'
+  task 'create' do
+    target_database_servers.create_databases
+  end
+
+  desc 'Drop test databases'
+  task 'drop' do
+    target_database_servers.drop_databases
+  end
+
+end
+
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
+task :spec => ['db:create'] do
+end
+
 task :default => :spec
+
+# Local Variables:
+# mode: ruby
+# End:
