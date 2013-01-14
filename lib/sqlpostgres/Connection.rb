@@ -83,6 +83,8 @@ module SqlPostgres
     #    to nil.
     # 'password'::
     #    Password.  nil, the default, means no password.
+    # 'encoding'::
+    #    Client encoding.
     #
     # To wrap an existing connection, pass this argument:
     #
@@ -107,12 +109,15 @@ module SqlPostgres
         tty = args['tty'] || ""
         login = args['login']
         password = args['password']
+        client_encoding = args['encoding']
         @pgconn = @@pgClass.connect(hostName, port, options, tty, dbName, 
                                     login, password)
+        if client_encoding
+          @pgconn.set_client_encoding(client_encoding)
+        end
       end
       @statement_in_exception = args['statement_in_exception']
       @statement_in_exception = true if @statement_in_exception.nil?
-      @pgconn.set_client_encoding("unicode")
     end
 
     # close the connection.  If it's already closed, do nothing.

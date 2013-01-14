@@ -18,9 +18,8 @@ class ConnectionTest < Test
   def test_ConnectionNewWrap
     Connection.mockPgClass do
       rawConnection = MockPGconn.new
-      assertEquals(MockPGconn.state[:encoding], nil)
       connection = Connection.new('connection'=>rawConnection)
-      assertEquals(rawConnection.state[:encoding], 'unicode')
+      assertEquals(connection.pgconn, rawConnection)
     end
   end
 
@@ -86,17 +85,19 @@ class ConnectionTest < Test
       password = randomString
       options = randomString
       tty = randomString
+      encoding = randomString
       connection = Connection.new('host_name'=>hostName,
                                   'port'=>port,
                                   'options'=>options,
                                   'tty'=>tty,
                                   'db_name'=>dbName,
                                   'login'=>login,
-                                  'password'=>password)
+                                  'password'=>password,
+                                  'encoding'=>encoding)
       assertEquals(MockPGconn.state[:open], true)
       assertEquals(MockPGconn.state[:openArgs], 
                    [hostName, port, options, tty, dbName, login, password])
-      assertEquals(MockPGconn.state[:encoding], 'unicode')
+      assertEquals(MockPGconn.state[:encoding], encoding)
     end
   end
 
