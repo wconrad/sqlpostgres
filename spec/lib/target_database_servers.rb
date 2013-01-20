@@ -11,9 +11,15 @@ module TestSupport
     include Singleton
 
     def test_connections
-      database_servers.map(&:test_connections).flatten
+      database_servers.map(&:test_connections).flatten.map do |test_connection|
+        [test_connection.context, test_connection.connection]
+      end
     end
     memoize :test_connections
+
+    def test_connection
+      test_connections.last
+    end
 
     def create_databases
       database_servers.each(&:create_databases)

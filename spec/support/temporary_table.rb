@@ -6,6 +6,7 @@ RSpec.configure do |config|
   shared_context 'temporary table' do |args|
 
     around(:each) do |block|
+      args = args.merge(:connection => connection)
       TestSupport::TemporaryTable.create(args, &block)
     end
 
