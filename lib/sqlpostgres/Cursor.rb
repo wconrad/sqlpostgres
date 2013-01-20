@@ -101,8 +101,8 @@ module SqlPostgres
       @connection.exec(statement)
     end
 
-    # Close the cursor.  Once closed, it may closed or fetched from
-    # again.
+    # Close the cursor.  Once closed, it may not be closed or fetched
+    # from again.
 
     def close
       statement = "close #{@name}"

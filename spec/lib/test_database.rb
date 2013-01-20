@@ -33,6 +33,7 @@ module TestSupport
         TestConnection.new(self, client_encoding)
       end
     end
+    memoize :test_connections
 
     def connection_args
       @connection_args.merge('db_name' => db_name)
