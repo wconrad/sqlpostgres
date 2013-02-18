@@ -321,7 +321,7 @@ module SqlPostgres
     # 11:30:24.000000-07")
 
     def datetime_to_sql(d)
-      d.strftime("%Y-%m-%d %H:%M:%S%z").gsub(/Z$/, "+0000")
+      d.strftime("%Y-%m-%d %H:%M:%S.%N%z").gsub(/Z$/, "+0000")
     end
     module_function :datetime_to_sql
 

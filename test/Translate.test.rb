@@ -56,7 +56,7 @@ class TranslateTest < Test
       ],
       [
         DateTime.civil(2001, 1, 1, 0, 0, 0, Rational(7, 24)),
-        "timestamp with time zone '2001-01-01 00:00:00+0700'",
+        "timestamp with time zone '2001-01-01 00:00:00.000000000+0700'",
       ],
       [Date.civil(2001, 1, 1), "date '2001-01-01'"],
       [
@@ -310,7 +310,7 @@ class TranslateTest < Test
       [1970, 12, 31, 23, 59, 59, -11],
     ]
     for testCase in testCases
-      sql = "%04d-%02d-%02d %02d:%02d:%02d%+03d00" % testCase
+      sql = "%04d-%02d-%02d %02d:%02d:%02d.000000000%+03d00" % testCase
       dateTime = DateTime.civil(*testCase[0..5] + 
                                 [Rational(testCase[6], 24)])
       assertEquals(Translate.datetime_to_sql(dateTime), sql)
