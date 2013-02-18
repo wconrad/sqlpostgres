@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "sqlpostgres"
-  s.version = "1.2.4"
+  s.version = "1.2.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wayne Conrad"]
-  s.date = "2013-01-05"
+  s.date = "2013-02-18"
   s.description = "A mini-language for building and executing SQL statements against a postgresql database.  This is a very old library, pre-dating active record and lacking many of its refinments.  New projects will probably not want to use it."
   s.email = "wconrad@yagni.com"
   s.extra_rdoc_files = [
@@ -121,6 +121,7 @@ Gem::Specification.new do |s|
     "lib/sqlpostgres/Transaction.rb",
     "lib/sqlpostgres/Translate.rb",
     "lib/sqlpostgres/Update.rb",
+    "sqlpostgres.gemspec",
     "test/Assert.rb",
     "test/Connection.test.rb",
     "test/Cursor.test.rb",
