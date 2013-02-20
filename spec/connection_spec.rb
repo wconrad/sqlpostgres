@@ -347,13 +347,13 @@ module SqlPostgres
       end
 
       shared_context 'failed close' do
-        let(:close_exception) {StandardError.new('failed to close')}
+        let(:close_exception) {[StandardError, 'failed to close']}
         before(:each) do
-          connection.should_receive(:close).and_raise(close_exception)
+          connection.should_receive(:close).and_raise(*close_exception)
         end
       end
 
-      context '(normal yield)' do
+      context '(block runs normally)' do
 
         context '(normal close)' do
 
@@ -378,7 +378,7 @@ module SqlPostgres
             expect {
               Connection.open(args) do
               end
-            }.to raise_error close_exception
+            }.to raise_error *close_exception
           end
 
         end
@@ -387,7 +387,7 @@ module SqlPostgres
 
       context '(exception in block)' do
 
-        let(:block_exception) {StandardError.new('failed in block')}
+        let(:block_exception) {[StandardError, 'failed in block']}
 
         context '(normal close)' do
 
@@ -396,9 +396,9 @@ module SqlPostgres
           specify do
             expect {
               Connection.open(args) do
-                raise block_exception
+                raise *block_exception
               end
-            }.to raise_error block_exception
+            }.to raise_error *block_exception
           end
 
         end
@@ -410,9 +410,9 @@ module SqlPostgres
           specify do
             expect {
               Connection.open(args) do
-                raise block_exception
+                raise *block_exception
               end
-            }.to raise_error block_exception
+            }.to raise_error *block_exception
           end
 
         end
@@ -452,11 +452,11 @@ module SqlPostgres
       context '(exception)' do
 
         let(:message) {"query failed\n"}
-        let(:exception) {PGError.new(message)}
+        let(:exception) {[PGError, message]}
 
         before(:each) do
           pg_connection.should_receive(:exec)\
-            .with(statement).and_raise(exception)
+            .with(statement).and_raise(*exception)
         end
 
         context '(statement_in_exception = false)' do
@@ -464,7 +464,7 @@ module SqlPostgres
           specify do
             expect {
               connection.exec(statement)
-            }.to raise_error exception
+            }.to raise_error *exception
           end
         end
 
