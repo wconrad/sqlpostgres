@@ -56,3 +56,7 @@ This library only works properly with the SQL-ASCII encoding.
 == WHOAMI
 
 Wayne Conrad <wconrad@yagni.com>
+
+== CONTRIBUTORS
+
+Sam Kellogg <sam@nickstoys.com>
