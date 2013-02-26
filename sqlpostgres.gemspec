@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "sqlpostgres"
-  s.version = "1.2.6"
+  s.version = "1.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Wayne Conrad"]
-  s.date = "2013-02-18"
+  s.date = "2013-02-26"
   s.description = "A mini-language for building and executing SQL statements against a postgresql database.  This is a very old library, pre-dating active record and lacking many of its refinments.  New projects will probably not want to use it."
   s.email = "wconrad@yagni.com"
   s.extra_rdoc_files = [
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
+    "Changelog.md",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.md",
@@ -121,6 +122,32 @@ Gem::Specification.new do |s|
     "lib/sqlpostgres/Transaction.rb",
     "lib/sqlpostgres/Translate.rb",
     "lib/sqlpostgres/Update.rb",
+    "rake_tasks/db.rake",
+    "rake_tasks/default.rake",
+    "rake_tasks/jeweler.rake",
+    "rake_tasks/test.rake",
+    "rake_tasks/test_spec.rake",
+    "rake_tasks/test_unit.rake",
+    "spec/Translate_spec.rb",
+    "spec/config/.gitignore",
+    "spec/config/config.yml",
+    "spec/config/database.yml.template",
+    "spec/connection_spec.rb",
+    "spec/cursor_spec.rb",
+    "spec/lib/database_config.rb",
+    "spec/lib/database_server.rb",
+    "spec/lib/postgres_template.rb",
+    "spec/lib/target_database_servers.rb",
+    "spec/lib/temporary_table.rb",
+    "spec/lib/test_config.rb",
+    "spec/lib/test_connection.rb",
+    "spec/lib/test_database.rb",
+    "spec/roundtrip_spec.rb",
+    "spec/spec_helper.rb",
+    "spec/support/all_characters.rb",
+    "spec/support/clear_default_connection.rb",
+    "spec/support/temporary_table.rb",
+    "spec/support/test_connections.rb",
     "sqlpostgres.gemspec",
     "test/Assert.rb",
     "test/Connection.test.rb",
@@ -151,9 +178,7 @@ Gem::Specification.new do |s|
     "test/TestSetup.rb",
     "test/TestUtil.rb",
     "test/Transaction.test.rb",
-    "test/Translate.test.rb",
     "test/Update.test.rb",
-    "test/roundtrip.test.rb",
     "test/test",
     "tools/exampleinserter/ExampleInserter.rb",
     "tools/rdoc/ChangeLog",
@@ -237,16 +262,22 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<pg>, ["~> 0.13.2"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_development_dependency(%q<memoizer>, ["~> 1.0.1"])
       s.add_development_dependency(%q<rake>, ["~> 10.0.3"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.12.0"])
     else
       s.add_dependency(%q<pg>, ["~> 0.13.2"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_dependency(%q<memoizer>, ["~> 1.0.1"])
       s.add_dependency(%q<rake>, ["~> 10.0.3"])
+      s.add_dependency(%q<rspec>, ["~> 2.12.0"])
     end
   else
     s.add_dependency(%q<pg>, ["~> 0.13.2"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+    s.add_dependency(%q<memoizer>, ["~> 1.0.1"])
     s.add_dependency(%q<rake>, ["~> 10.0.3"])
+    s.add_dependency(%q<rspec>, ["~> 2.12.0"])
   end
 end
 
