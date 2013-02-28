@@ -1,3 +1,9 @@
+### dev
+
+Bug fixes
+
+* Added missing YAML require in specs
+
 ### 1.3.0
 
 Enhancements
